@@ -17,3 +17,6 @@ class User:
     def __repr__(self) -> str:
         """representation de l'User"""
         return f'User(nom={self.nom}, prenom={self.prenom}, taille={self.taille}, poids={self.poid}, job={self.job})'
+    
+
+print(User)
