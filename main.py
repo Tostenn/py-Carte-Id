@@ -12,4 +12,6 @@ class User:
         self.taille = taile
         self.poid = poids
         self.job = job
-        pass
+    
+    def __repr__(self) -> str:
+        return f'User(nom={self.nom}, prenom={self.prenom}, taille={self.taille}, poids={self.poid}, job={self.job})'
