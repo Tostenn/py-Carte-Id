@@ -26,12 +26,6 @@ class User:
     
     def __repr__(self) -> str:
         """representation de l'User"""
-<<<<<<< HEAD
-        return f'User(nom={self.nom}, prenom={self.prenom}, taille={self.taille}, poids={self.poid}, job={self.job})'
-    
-
-
-=======
         return f'User(nom={self.nom}, prenom={self.prenom}, age={self.age}, sexe={self.sex}, taille={self.taille}, poids={self.masse}, job={self.job})'
     
     def __str__(self) -> str:
@@ -44,4 +38,3 @@ je fais a peu prés {self.taille} m pése {self.masse} Kg et j'exerce la fonctio
 user = User('kouya','tosten',20,'H',1.80,70,'dev')
 print(user)
 print(user.__repr__())
->>>>>>> makefonction
