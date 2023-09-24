@@ -1,5 +1,5 @@
 
-from repertoire import effter
+from repertoire import effter,temps
 from random import randint
 effter()
 
@@ -7,18 +7,26 @@ class User:
     """donner vie a un Utilisateur"""
     def __init__(
             self,nom:str,prenom:str,age:int,sexe:str,
-            taile:float,masse:float,job:str,pays:str
+            taile:float,masse:float,job:str,pays:str,
+            daten:str=temps()[0]
         ) -> None:
         """initilisation de l'utilisateur"""
 
-        assert nom.isalpha() and len(nom) >=3, f'{nom} is not isalpha and >= 3'
-        assert prenom.isalpha() and len(prenom) >=3, f'{prenom} is not isalpha and >= 3'
-        assert age >= 0, f'{age} >= 0'
-        assert sexe in ['H','F'], f'sex in [ H , F ]'
-        assert taile >= 0, f'{taile} >= 0 and at unity Metre'
-        assert masse >= 0, f'{masse} >= 0 and at unity Kilogramme'
-        assert job.isalpha() and len(job) >= 3, f'{job} not isalpha and >= 3'
-        assert pays.isascii() and len(pays) >= 3, f'{pays} not isalpha and >= 3'
+        daten = daten.split('-')
+
+        for i in range(len(daten)):
+            if len(daten[i])==1:daten[i] = '0'+daten[i]
+        daten = '-'.join(daten)
+
+        assert nom.isalpha() and len(nom) >=3, 'nom is not isalpha and >= 3'
+        assert prenom.isalpha() and len(prenom) >=3, 'prenom is not isalpha and >= 3'
+        assert age >= 0, 'age >= 0'
+        assert sexe in ['H','F'], 'sex in [ H , F ]'
+        assert taile >= 0, 'taile >= 0 and at unity Metre'
+        assert masse >= 0, 'masse >= 0 and at unity Kilogramme'
+        assert job.isalpha() and len(job) >= 3, 'job not isalpha and >= 3'
+        assert pays.isascii() and len(pays) >= 3, 'pays not isalpha and >= 3'
+        assert daten.isascii() and len(daten) == 10, 'daten == 10 format 01-01-1001 | dd-mm-yyyy'
 
         self.nom = nom
         self.prenom = prenom
@@ -28,6 +36,7 @@ class User:
         self.masse = masse
         self.job = job
         self.pays = pays
+        self.date = daten
     
     def __repr__(self) -> str:
         """representation de l'User"""
@@ -43,7 +52,7 @@ class CarteId:
     def __init__(self,user:User) -> None:
         self.user = user
     
-    def __repr__(self) -> str:return f'CarteId(user=User)'
+    def __repr__(self) -> str:return f'CarteId(user={self.user.__repr__()})'
 
     def fmt_pays(self):
         '''récupération du code pays'''
@@ -77,13 +86,14 @@ class CarteId:
 |  | _    _ | n {self.fmt_pays().upper()} {self.fmt_nb():<41}|
 |  (   __   ) nom : {self.user.nom:<40}|
 |   \______/  prenom : {self.user.prenom:<37}|
-|   date de naissance : 04/05/2003 | sex {self.user.sex:<19}|
+|   date de naissance : {self.user.date} | sex {self.user.sex:<19}|
 |   taille 1.80 m | masse {f"{self.user.masse} kg":<34}|
 |{'_':_^59}|
 '''
         
-user = User('kouya','tosten',20,'H',1.80,70,'dev','cote d\'ivoire')
+user = User('kouya','tosten',20,'H',1.80,70,'dev','cote d\'ivoire','1-1-0000')
 print(user)
 print(user.__repr__())
 carte = CarteId(user)
 print(carte)
+print(carte.__repr__())

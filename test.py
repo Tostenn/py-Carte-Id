@@ -12,7 +12,7 @@ print(f"""{'-':-^60}
 |  | _    _ | n CI {'000564454456545':<41}|
 |  (   __   ) nom : {'kouya':<40}|
 |   \______/  prenom : {"tosten boman":<37}|
-|   date de naissance : 04/05/2003 | sex {'H':<19}|
+|   date de naissance : 04/05/2003 | sex {'femme':<19}|
 |   taille 1.80 m | masse {"70 kg":<34}|
 |{'_':_^59}|
 """)
