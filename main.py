@@ -44,21 +44,38 @@ class CarteId:
         self.user = user
     
     def __repr__(self) -> str:return f'CarteId(user=User)'
+
+    def fmt_pays(self):
+        pays = self.user.pays
+        id = ''
+        if pays.count(' ') >= 1: # [1; +oo]
+            pays = pays.split(' ')[:2]
+
+            for i in pays:
+                if "'" in i:i = i[i.index("'")+1:i.index("'")+2]
+                else : i = i[0]
+                id += i
+
+        else : id = pays[:2]
+
+        return id
     
-    def __str__(self) -> str:
-        return f'''f"""{'-':-^60}
+    def __str__(self) -> str:        
+        return f'''{'-':-^60}
 |{f"république {self.user.pays}".upper():^59}|
 |{"carte national d'ientité".upper():^59}|
 |{"----------------":^59}|
 |   _______{"_":<49}|
-|  | _    _ | n CI {'000564454456545':<41}|
+|  | _    _ | n {self.fmt_pays().upper()} {'000564454456545':<41}|
 |  (   __   ) nom : {self.user.nom:<40}|
 |   \______/  prenom : {self.user.prenom:<37}|
 |   date de naissance : 04/05/2003 | sex {self.user.sex:<19}|
 |   taille 1.80 m | masse {f"{self.user.masse} kg":<34}|
 |{'_':_^59}|
-"""'''
+'''
         
-user = User('kouya','tosten',20,'H',1.80,70,'dev','cote d ivoire')
+user = User('kouya','tosten',20,'H',1.80,70,'dev','cote d\'ivoire')
 print(user)
 print(user.__repr__())
+carte = CarteId(user)
+print(carte)
