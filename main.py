@@ -54,7 +54,7 @@ class CarteId:
     
     def __repr__(self) -> str:return f'CarteId(user={self.user.__repr__()})'
 
-    def fmt_pays(self):
+    def fmt_pays(self) -> str:
         '''récupération du code pays'''
         pays = self.user.pays
         id = ''
@@ -70,12 +70,18 @@ class CarteId:
 
         return id
     
-    def fmt_nb(seif):
+    def fmt_nb(seif) -> str:
         '''numéro aléatoire de carte d'identite '''
         n = randint(1,15)
         id = '0'*(15-n)
         for i in range(n): id += str(randint(0,9))
         return id
+
+    def fmt_sex(self) -> str:
+        '''formate le sex de User'''
+        if self.user.sex.lower() == 'h': return 'male'
+        else: return 'femelle'
+
 
     def __str__(self) -> str:        
         return f'''{'-':-^60}
@@ -86,7 +92,7 @@ class CarteId:
 |  | _    _ | n {self.fmt_pays().upper()} {self.fmt_nb():<41}|
 |  (   __   ) nom : {self.user.nom:<40}|
 |   \______/  prenom : {self.user.prenom:<37}|
-|   date de naissance : {self.user.date} | sex {self.user.sex:<19}|
+|   date de naissance : {self.user.date} | sex {self.fmt_sex().upper():<19}|
 |   taille 1.80 m | masse {f"{self.user.masse} kg":<34}|
 |{'_':_^59}|
 '''
