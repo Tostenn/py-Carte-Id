@@ -46,6 +46,7 @@ class CarteId:
     def __repr__(self) -> str:return f'CarteId(user=User)'
 
     def fmt_pays(self):
+        '''récupération du code pays'''
         pays = self.user.pays
         id = ''
         if pays.count(' ') >= 1: # [1; +oo]
@@ -61,6 +62,7 @@ class CarteId:
         return id
     
     def fmt_nb(seif):
+        '''numéro aléatoire de carte d'identite '''
         n = randint(1,15)
         id = '0'*(15-n)
         for i in range(n): id += str(randint(0,9))
