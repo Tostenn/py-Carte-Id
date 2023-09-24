@@ -1,6 +1,6 @@
 
 from repertoire import effter
-
+from random import randint
 effter()
 
 class User:
@@ -60,13 +60,19 @@ class CarteId:
 
         return id
     
+    def fmt_nb(seif):
+        n = randint(1,15)
+        id = '0'*(15-n)
+        for i in range(n): id += str(randint(0,9))
+        return id
+
     def __str__(self) -> str:        
         return f'''{'-':-^60}
 |{f"république {self.user.pays}".upper():^59}|
 |{"carte national d'ientité".upper():^59}|
 |{"----------------":^59}|
 |   _______{"_":<49}|
-|  | _    _ | n {self.fmt_pays().upper()} {'000564454456545':<41}|
+|  | _    _ | n {self.fmt_pays().upper()} {self.fmt_nb():<41}|
 |  (   __   ) nom : {self.user.nom:<40}|
 |   \______/  prenom : {self.user.prenom:<37}|
 |   date de naissance : 04/05/2003 | sex {self.user.sex:<19}|
