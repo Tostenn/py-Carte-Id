@@ -88,17 +88,17 @@ class CarteId:
 |{f"république {self.user.pays}".upper():^59}|
 |{"carte national d'ientité".upper():^59}|
 |{"--------------":^59}|
-|{"--------------":<59}|
+|--------------  {f'profession : {self.user.job}':^43}|
 ||  ________  {"|":<46}|
 || | _    _ | | n {self.fmt_pays().upper()} {self.fmt_nb():<39}|
-|| ( * __ | ) | nom : {self.user.nom:<38}|
-||  \______/  | prenom : {self.user.prenom:<35}|
+|| ( * __ | ) | nom : {self.user.nom.upper():<38}|
+||  \______/  | prenom : {self.user.prenom.upper():<35}|
 ||____________| date de naissance : {self.user.date} | sex {self.fmt_sex().upper():<7}|
 |               taille {self.user.taille} m | masse {f"{self.user.masse} kg":<22}|
 |{'_':_^59}|
 '''
 
-user = User('kouya','tosten',20,'F',1.8,7200,'dev','cote d\'ivoire','1-1-0000')
+user = User('kouya','tosten',20,'H',1.8,7200,'developpeur','cote d\'ivoire','1-1-0000')
 # print(user)
 # print(user.__repr__())
 carte = CarteId(user)
