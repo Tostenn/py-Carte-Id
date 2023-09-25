@@ -1,6 +1,6 @@
 
 from repertoire import effter,temps
-from random import randint
+from random import randint,choices
 effter()
 
 class User:
@@ -83,14 +83,28 @@ class CarteId:
         if self.user.sex.lower() == 'h': return 'male'
         else: return 'femelle'
 
+    def ph_head(self,randoms = False,db= False):
+
+        h = ['!','_','^','-','?']
+        id = ''
+        if randoms and db:
+            h = choices(h,k=randint(1,2))
+            while len(id) != 10:
+                for i in h:id+=i
+
+        elif randoms: id= ''.join(choices(h))*10
+
+        else: id= h[3] *10
+        return id
+
     def __str__(self) -> str:        
-        return f'''{'-':-^60}
+        return f''' {'_':_^59}
 |{f"république {self.user.pays}".upper():^59}|
 |{"carte national d'ientité".upper():^59}|
 |{"--------------":^59}|
 |--------------  {f'profession : {self.user.job}':^43}|
-||  ________  {"|":<46}|
-|| | _    _ | | n {self.fmt_pays().upper()} {self.fmt_nb():<39}|
+|| {self.ph_head(True)} {"|":<46}|
+|| ( _    _ ) | n {self.fmt_pays().upper()} {self.fmt_nb():<39}|
 || ( * __ | ) | nom : {self.user.nom.upper():<38}|
 ||  \______/  | prenom : {self.user.prenom.upper():<35}|
 ||____________| date de naissance : {self.user.date} | sex {self.fmt_sex().upper():<7}|
