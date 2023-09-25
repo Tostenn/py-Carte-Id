@@ -11,7 +11,6 @@ class User:
             daten:str=temps()[0]
         ) -> None:
         """initilisation de l'utilisateur"""
-
         daten = daten.split('-')
 
         for i in range(len(daten)):
@@ -27,6 +26,8 @@ class User:
         assert job.isalpha() and len(job) >= 3, 'job not isalpha and >= 3'
         assert pays.isascii() and len(pays) >= 3, 'pays not isalpha and >= 3'
         assert daten.isascii() and len(daten) == 10, 'daten == 10 format 01-01-1001 | dd-mm-yyyy'
+
+        taile = f'{taile:.2f}'
 
         self.nom = nom
         self.prenom = prenom
@@ -82,24 +83,24 @@ class CarteId:
         if self.user.sex.lower() == 'h': return 'male'
         else: return 'femelle'
 
-
     def __str__(self) -> str:        
         return f'''{'-':-^60}
 |{f"république {self.user.pays}".upper():^59}|
 |{"carte national d'ientité".upper():^59}|
-|{"----------------":^59}|
-|   _______{"_":<49}|
-|  | _    _ | n {self.fmt_pays().upper()} {self.fmt_nb():<41}|
-|  (   __   ) nom : {self.user.nom:<40}|
-|   \______/  prenom : {self.user.prenom:<37}|
-|   date de naissance : {self.user.date} | sex {self.fmt_sex().upper():<19}|
-|   taille 1.80 m | masse {f"{self.user.masse} kg":<34}|
+|{"--------------":^59}|
+|{"--------------":<59}|
+||  ________  {"|":<46}|
+|| | _    _ | | n {self.fmt_pays().upper()} {self.fmt_nb():<39}|
+|| ( * __ | ) | nom : {self.user.nom:<38}|
+||  \______/  | prenom : {self.user.prenom:<35}|
+||____________| date de naissance : {self.user.date} | sex {self.fmt_sex().upper():<7}|
+|               taille {self.user.taille} m | masse {f"{self.user.masse} kg":<22}|
 |{'_':_^59}|
 '''
-        
-user = User('kouya','tosten',20,'H',1.80,70,'dev','cote d\'ivoire','1-1-0000')
-print(user)
-print(user.__repr__())
+
+user = User('kouya','tosten',20,'F',1.8,7200,'dev','cote d\'ivoire','1-1-0000')
+# print(user)
+# print(user.__repr__())
 carte = CarteId(user)
 print(carte)
-print(carte.__repr__())
+# print(carte.__repr__())
