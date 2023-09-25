@@ -53,6 +53,8 @@ class CarteId:
     def __init__(self,user:User) -> None:
         self.user = user
         self.ph_bores(True)
+        self.barbe = self.ph_barbe()
+        self.ss = self.ph_ssil(True)
 
     def __repr__(self) -> str:return f'CarteId(user={self.user.__repr__()})'
 
@@ -115,9 +117,23 @@ class CarteId:
             self.bh +=')' if self.bh == '(' else '|'
             self.bb +=')' if self.bb == '(' else '|'
         
-        print(self.bh)
-        print(self.bb)
+        # print(self.bh)
+        # print(self.bb)
 
+    def ph_jou(self,randoms = False):
+        return ''.join(choices([' ','*','!','o']))
+
+    def ph_barbe(self,randoms = False):
+        return ''.join(choices(['_','=']))
+    
+    def ph_ssil(self,randoms = False):
+        id =''
+        if randoms:
+            id = ''.join(choices([' ',"\\"]))
+            id+= '/' if id == '\\' else ' '
+        else:id = '  '
+        return id
+            
     def __str__(self) -> str:        
         return f''' {'_':_^59}
 |{f"république {self.user.pays}".upper():^59}|
@@ -125,9 +141,9 @@ class CarteId:
 |{"--------------":^59}|
 |--------------  {f'profession : {self.user.job}':^43}|
 || {self.ph_head(True)} {"|":<46}|
-|| {self.bh[0]} _    _ {self.bh[1]} | n {self.fmt_pays().upper()} {self.fmt_nb():<39}|
-|| {self.bb[0]} * __ | {self.bb[1]} | nom : {self.user.nom.upper():<38}|
-||  \______/  | prenom : {self.user.prenom.upper():<35}|
+|| {self.bh[0]} _{self.ss[0]}  {self.ss[1]}_ {self.bh[1]} | n {self.fmt_pays().upper()} {self.fmt_nb():<39}|
+|| {self.bb[0]} {self.ph_jou()} __ {self.ph_jou()} {self.bb[1]} | nom : {self.user.nom.upper():<38}|
+||  \{self.barbe}____{self.barbe}/  | prenom : {self.user.prenom.upper():<35}|
 ||____________| date de naissance : {self.user.date} | sex {self.fmt_sex().upper():<7}|
 |               taille {self.user.taille} m | masse {f"{self.user.masse} kg":<22}|
 |{'_':_^59}|
