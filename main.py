@@ -52,7 +52,8 @@ je fais a peu prés {self.taille} m pése {self.masse} Kg et j'exerce la fonctio
 class CarteId:
     def __init__(self,user:User) -> None:
         self.user = user
-    
+        self.ph_bores(True)
+
     def __repr__(self) -> str:return f'CarteId(user={self.user.__repr__()})'
 
     def fmt_pays(self) -> str:
@@ -91,11 +92,31 @@ class CarteId:
             h = choices(h,k=randint(1,2))
             while len(id) != 10:
                 for i in h:id+=i
-
         elif randoms: id= ''.join(choices(h))*10
-
         else: id= h[3] *10
         return id
+
+    def ph_bore(self):
+        h = ['|','(']
+        return h[randint(0,1)]
+
+    def ph_bores(self,randoms=False):
+        # modifier les bordure du visage
+        self.bh = self.ph_bore()
+        self.bb = self.ph_bore()
+        if randoms:
+            self.bh += self.ph_bore()
+            self.bb += self.ph_bore()
+
+            self.bh = self.bh[0]+ ')' if self.bh[1] == '(' else self.bh
+            self.bb =self.bb[0] +')' if self.bb[1] == '(' else self.bb
+            
+        else:
+            self.bh +=')' if self.bh == '(' else '|'
+            self.bb +=')' if self.bb == '(' else '|'
+        
+        print(self.bh)
+        print(self.bb)
 
     def __str__(self) -> str:        
         return f''' {'_':_^59}
@@ -104,8 +125,8 @@ class CarteId:
 |{"--------------":^59}|
 |--------------  {f'profession : {self.user.job}':^43}|
 || {self.ph_head(True)} {"|":<46}|
-|| ( _    _ ) | n {self.fmt_pays().upper()} {self.fmt_nb():<39}|
-|| ( * __ | ) | nom : {self.user.nom.upper():<38}|
+|| {self.bh[0]} _    _ {self.bh[1]} | n {self.fmt_pays().upper()} {self.fmt_nb():<39}|
+|| {self.bb[0]} * __ | {self.bb[1]} | nom : {self.user.nom.upper():<38}|
 ||  \______/  | prenom : {self.user.prenom.upper():<35}|
 ||____________| date de naissance : {self.user.date} | sex {self.fmt_sex().upper():<7}|
 |               taille {self.user.taille} m | masse {f"{self.user.masse} kg":<22}|
