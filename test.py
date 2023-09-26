@@ -16,9 +16,3 @@ print(f"""{'-':-^60}
 |   taille 1.80 m | masse {"70 kg":<34}|
 |{'_':_^59}|
 """)
-
-from random import choices,randint
-
-l = '(('
-print(l)
-print(l.replace('(',')',))
