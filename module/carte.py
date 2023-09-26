@@ -4,7 +4,8 @@ from random import randint,choices
 from module.user import User
 
 class CarteId:
-    def __init__(self,user:User) -> None:
+    '''Carte d'Identié'''
+    def __init__(self,user:User,option={}) -> None:
         self.user = user
         self.ph_bores(True)
         self.barbe = self.ph_barbe()
@@ -36,12 +37,12 @@ class CarteId:
         return id
 
     def fmt_sex(self) -> str:
-        '''formate le sex de User'''
+        '''formatage le sex de User'''
         if self.user.sex.lower() == 'h': return 'male'
         else: return 'femelle'
 
     def ph_head(self,randoms = False,db= False):
-
+        '''formatage des cheveux'''
         h = ['!','_','^','-','?']
         id = ''
         if randoms and db:
@@ -53,11 +54,12 @@ class CarteId:
         return id
 
     def ph_bore(self):
+        '''bordure disponible'''
         h = ['|','(']
         return h[randint(0,1)]
 
     def ph_bores(self,randoms=False):
-        # modifier les bordure du visage
+        '''formatage des bordures du visage'''
         self.bh = self.ph_bore()
         self.bb = self.ph_bore()
         if randoms:
@@ -71,16 +73,16 @@ class CarteId:
             self.bh +=')' if self.bh == '(' else '|'
             self.bb +=')' if self.bb == '(' else '|'
         
-        # print(self.bh)
-        # print(self.bb)
-
     def ph_jou(self,randoms = False):
+        '''joue du visage disponible'''
         return ''.join(choices([' ','*','!','o']))
 
     def ph_barbe(self,randoms = False):
+        '''barbe disponible'''
         return ''.join(choices(['_','=']))
     
     def ph_ssil(self,randoms = False):
+        '''formatage  des soucils'''
         id =''
         if randoms:
             id = ''.join(choices([' ',"\\"]))
@@ -88,7 +90,7 @@ class CarteId:
         else:id = '  '
         return id
             
-    def __str__(self) -> str:        
+    def __str__(self) -> str:
         return f''' {'_':_^59}
 |{f"république {self.user.pays}".upper():^59}|
 |{"carte national d'ientité".upper():^59}|
