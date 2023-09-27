@@ -1,5 +1,5 @@
 
-from repertoire import temps
+from module.fonction import temps
 
 class User:
     """donner vie a un Utilisateur"""
