@@ -93,14 +93,14 @@ class CarteId:
     def __str__(self) -> str:
         return f''' {'_':_^59}
 |{f"république {self.user.pays}".upper():^59}|
-|{"carte national d'ientité".upper():^59}|
+|{"carte national d'identité".upper():^59}|
 |{"--------------":^59}|
-|--------------  {f'profession : {self.user.job}':^43}|
+|--------------  {f'Profession : {self.user.job}':^43}|
 || {self.ph_head(True)} {"|":<46}|
-|| {self.bh[0]} _{self.ss[0]}  {self.ss[1]}_ {self.bh[1]} | n {self.fmt_pays().upper()} {self.fmt_nb():<39}|
-|| {self.bb[0]} {self.ph_jou()} __ {self.ph_jou()} {self.bb[1]} | nom : {self.user.nom.upper():<38}|
-||  \{self.barbe}____{self.barbe}/  | prenom : {self.user.prenom.upper():<35}|
-||____________| date de naissance : {self.user.date} | sex {self.fmt_sex().upper():<7}|
-|               taille {self.user.taille} m | masse {f"{self.user.masse} kg":<22}|
+|| {self.bh[0]} _{self.ss[0]}  {self.ss[1]}_ {self.bh[1]} | N° {self.fmt_pays().upper()} {self.fmt_nb():<38}|
+|| {self.bb[0]} {self.ph_jou()} __ {self.ph_jou()} {self.bb[1]} | Nom : {self.user.nom.upper():<38}|
+||  \{self.barbe}____{self.barbe}/  | Prenom : {self.user.prenom.upper():<35}|
+||____________| Date de naissance: {self.user.date} | Sexe {self.fmt_sex().upper():<7}|
+|               Taille : {self.user.taille} m | Poids : {f"{self.user.masse} kg":<18}|
 |{'_':_^59}|
 '''

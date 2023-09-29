@@ -8,9 +8,9 @@ effter()
 
 
 user = User(
-    'kouya','tosten',20,
-    'H',1.8,7200,'developpeur',
-    'cote d\'ivoire','1-1-0000'
+    prenom='kouya',nom='tosten',age=20,
+    sexe='H',taile=1.8,masse=72,job='Developpeur',
+    pays='Côte d\'ivoire',daten='3/10/1996'
 )
 carte = CarteId(user)
 print(carte)
