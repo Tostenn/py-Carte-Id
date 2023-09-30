@@ -2,11 +2,14 @@
 from module.fonction import temps
 
 class User:
-    """Coordonnés de l'utilisateur"""
+    """nouvelle de l'utilisateur"""
+
+    # nombre d'utilisateur
+    nb_User = 0
     def __init__(
             self,nom:str,prenom:str,age:int,sexe:str,
             taile:float,masse:float,job:str,pays:str,
-            daten:str=temps()
+            daten:str=temps()[0]
         ) -> None:
         """initilisation de l'utilisateur"""
         daten = daten.split('/')
@@ -36,9 +39,33 @@ class User:
         self.job = job
         self.pays = pays
         self.date = daten
+
+        # incrément le nombre d'utilisateur a chaque initilisation
+        User.nb_User +=1
     
     def __repr__(self) -> str:
         """representation de l'Utilisateur"""
-        return f'USER:\nnom: {self.nom}\nprenom: {self.prenom}\nage: {self.age}\nsexe: {self.sex}\ntaille: {self.taille}\npoids: {self.masse}\njob: {self.job}'
-
+        return f'User(nom={self.nom}, prenom={self.prenom}, age={self.age}, sexe={self.sex}, taille={self.taille}, poids={self.masse}, job={self.job})'
+  
+    def __str__(self) -> str:
+        """Coordonnés de User"""
+        return f'USER: {User.nb_User} \nnom: {self.nom}\nprenom: {self.prenom}\nage: {self.age}\nsexe: {self.sex}\ntaille: {self.taille}\npoids: {self.masse}\njob: {self.job}'
     
+    def __description__(self):
+        """description de User"""
+        return f'''salut je suis {self.nom} {self.prenom}.
+je suis un{' homme' if self.sex.lower() == 'h' else 'e femme'},
+je fais a peu prés {self.taille} m pése {self.masse} Kg et j'exerce la fonction de {self.job}'''
+    
+    def __eq__(self,other) -> bool:
+        '''egaliter entre utilisateur'''
+
+        # ils seront égaux si ils sont le même sexe, taille, poids
+        
+        if isinstance(other,User):
+            u1 = [self.sex,self.taille,self.pays]
+            u2 = [other.sex,other.taille,other.pays]
+
+            if  u1 == u2:return True
+        return False
+

@@ -2,5 +2,4 @@ config
 log
 __pycache__/
 *.txt
-git.py
 test.py
