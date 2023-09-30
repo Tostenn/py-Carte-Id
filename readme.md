@@ -1,5 +1,9 @@
 # **Carte d'Identité**
 Qu'est-ce qu'une **Carte d'Identité** ? Vous le savez sûrement, une **carte d'identité** est un **Objet** qui regroupe plusieurs de nos informations personnelles telles que **nom**, **prénom**, **date de naissance** et j'en passe, mais le plus important sur une **Carte d'Identité** c'est la **photo** grâce à notre **Intelligence Artificielle (IA)** qui vous génère **un avartar Authentique** en tenant compte de vos informations personnelles cependant le sexe influence beaucoup à la conception.
+<hr>
+
+### <b style="text-transform:capitalize;"> bon  à savoir</b>
+Ce README est en constante évolution, alors jetez-y un coup d'œil plus complet de temps en temps... Vous trouverez peut-être de nouveaux détails intéressants dans d'autres sections ! 😊
 
 ## **Prérequis**
 + `Pyhon`
@@ -16,6 +20,21 @@ cd py-Carte-Id
 python main.py
 
 ```
+## Nouveauté
+Désormais possible de passer en mode interactif, ce mode vous permets de génerer des carte ID rapide et Dynamique avec l'**IA**.<br>
+![](img/demeModeActive.gif)
+<br>
+Pour utiliser trés simple
+```
+    python main.py -i active
+```
+
+## **Mode Interactif**
+Le **Mode iteractif** permet aux utilisateurs d'interagits avec l'**IA** qui vérifie et traitement vos données tout en vous indiquant les potentiels erreur que vous pourriez faire. Vous êtes guidés dans ses interventions par des informations visualisées grâce l'**IA**.<br>
+
+paramètre d'utilisation du le mode interactif<br>
++ activation `-i active`<br>
+- descativation `-i descative` etat par defaut
 
 ## **Avenir**
 + passage des parametres à l'<b style="text-transform:uppercase;">(ia)</b> pour éviter de les renter en dûr dans le programme 
