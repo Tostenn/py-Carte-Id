@@ -14,6 +14,6 @@ def effter():'''efface le terminal''';system("cls") if platform == "win32" else 
 def temps():
     '''renvoir la date et heure'''
     tp = localtime()
-    an = f'{tp.tm_mday}/{tp.tm_mon}/{tp.tm_year}'
-    heur = f'{tp.tm_hour}:{tp.tm_min}:{tp.tm_sec}'
+    an = [tp.tm_mday,tp.tm_mon,tp.tm_year]
+    heur = [tp.tm_hour,tp.tm_min,tp.tm_sec]
     return an,heur

@@ -9,10 +9,12 @@ class User:
     def __init__(
             self,nom:str,prenom:str,age:int,sexe:str,
             taile:float,masse:float,job:str,pays:str,
-            daten:str=temps()[0]
+            daten:list=temps()[0]
         ) -> None:
         """initilisation de l'utilisateur"""
-        daten = daten.split('/')
+
+        assert len(daten) == 3, 'list [dd,mm,yyyy]'
+        daten = [str(i) for i in daten]
 
         for i in range(len(daten)):
             if len(daten[i])==1:daten[i] = '0'+daten[i]
@@ -21,7 +23,7 @@ class User:
         assert nom.isalpha() and len(nom) >=3, 'nom is not isalpha and >= 3'
         assert prenom.isalpha() and len(prenom) >=3, 'prenom is not isalpha and >= 3'
         assert age >= 0, 'age >= 0'
-        assert sexe in ['H','F'], 'sex in [ H , F ]'
+        assert sexe.lower() in ['h','f'], 'sex in [ H , F ]'
         assert taile >= 0, 'taile >= 0 and at unity Metre'
         assert masse >= 0, 'masse >= 0 and at unity Kilogramme'
         assert job.isalpha() and len(job) >= 3, 'job not isalpha and >= 3'
@@ -32,7 +34,7 @@ class User:
 
         self.nom = nom
         self.prenom = prenom
-        self.sex = sexe
+        self.sex = sexe.upper()
         self.age = age
         self.taille = taile
         self.masse = masse
