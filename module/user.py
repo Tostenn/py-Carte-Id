@@ -17,7 +17,12 @@ class User:
         daten = [str(i) for i in daten]
 
         for i in range(len(daten)):
-            if len(daten[i])==1:daten[i] = '0'+daten[i]
+            if i in [0,1] and len(daten[i])==1:daten[i] = '0'+daten[i]
+            if i ==2:
+                a = 4 - len(daten[i])
+                daten[i] = ('0'*a)+daten[i]
+                
+                
         daten = '/'.join(daten)
 
         assert nom.isalpha() and len(nom) >=3, 'nom is not isalpha and >= 3'

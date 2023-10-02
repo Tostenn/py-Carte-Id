@@ -1,7 +1,7 @@
 
 from module.carte import CarteId,User
 from module.user import User
-from module.fonction import effter
+from module.fonction import effter,dataValidation,__veri_chemin__,__conten_fic__,recujson
 
 # insertion du mode interactif -i || --interactif
 from optparse import OptionParser
@@ -12,9 +12,17 @@ usage = '''Usage de l'IA
         ex : python main.py -i active
 '''
 
-op = OptionParser(usage,version='1.0.0.1')
+op = OptionParser(usage,version='1.0.1.1')
+
+# -i || --interactive
 op.add_option(
-    '-i','--interactif',dest='op_i',type='string',
+    '-i','--interactive',dest='op_i',type='string',
+    help='passer en mode interactif'
+)
+
+# -d || --data-path
+op.add_option(
+    '-d','--data-path',dest='op_data',type='string',
     help='passer en mode interactif'
 )
 
@@ -23,6 +31,7 @@ effter()
 
 
 # gestion du mode interactif -i || --interatif
+# le parametre est prioritaire sur les autre et les annule tous
 op_i = argument.op_i
 if op_i == 'active':
     print('intregrer une annimation ici | mode interactif')
@@ -118,7 +127,82 @@ if op_i == 'active':
     print(userCatre)
     exit()
 
+# le second parametre est prioritaire 
+op_data = argument.op_data
+if op_data:
 
+    if not __veri_chemin__(op_data) == 'ficher':
+        print(f'le chiemin [ {op_data} ] fournir est [invalide] ')
+        exit()
+
+    # chemin existe 
+    # vérification de l'extension du fichier
+
+    if not op_data.endswith(('.txt','json')):
+        print(f'le format du fichier [ {op_data} ] fournir n\'est pas pris en compte \nformat accepter [json] et [txt] ')
+        exit()
+
+    # key obligatoire
+    data_key = ['nom','prenom','sex','taille','dtn','poids','pays','job']
+
+    # fichier texte
+    if op_data.endswith(('.txt')):
+        data = __conten_fic__(op_data).split('\n')
+        datas = {}
+        for i in data:
+            i = i.strip()
+            if ':' in i:
+                datas[i[:i.index(':')]] = i[i.index(':')+1:]
+        del data
+
+    # fichier json
+    else:
+        datas = recujson(op_data)
+        print(datas)
+        exit()
+
+    # verification des clés
+    no_key = [i for i in data_key if not datas.get(i)]
+
+    if len(no_key) > 0:
+        print(f'des données manquantes ont été détecter\nliste\n|{"-"*5}'+f'\n|{"-"*5}'.join(no_key))
+        exit()
+    
+    # validation des données
+    datas,error = dataValidation(datas)
+
+    effter()
+    if not error:
+        user = User(
+            nom=datas['nom'],
+            prenom=datas['prenom'],
+            age= 10,
+            sexe=datas['sex'],
+            taile=float(datas['taille']),
+            masse=int(datas['poids']),
+            job=datas['job'],
+            pays=datas['pays'],
+            daten=datas['dtn']
+        )
+        userCatre = CarteId(user)
+        print('annimation ici aussi')
+        print(userCatre)
+    else:
+        print('erreur survenu\nListe')
+        for i,j in error.items():
+            print(f'{"-"*5}{i}:{j}')
+    exit()
+
+
+
+'''nom:jul
+prenom:céssar       
+sex:M
+dtn:12-07-100    
+taille:1.8        
+masse:93
+pays:France
+job:empreur'''
 # # programme principale
 
 logo = lambda word = 'Py-Carte-ID' : f'\n{word:-^60}'
@@ -127,7 +211,7 @@ user = User(
     prenom='kouya',nom='tosten',age=20,
     sexe='H',taile=1.8,masse=72,job='Developpeur',
     pays='Côte d\'ivoire',
-    daten=[3,10,1996]
+    daten=[3,10,196]
 )
 # print(f'''{user}{logo()}
 # repr : {user.__repr__()}
