@@ -21,35 +21,31 @@ python main.py
 
 ```
 ## Nouveauté
-Désormais possible de passer en mode interactif, ce mode vous permets de génerer des carte ID rapide et Dynamique avec l'**IA**.<br>
-![](img/demeModeActive.gif)
+![](img/demaModeDataParse.gif)
+Désormais possible de passer des données contenu dans fichier `Texte` ou `Json` grâce à l'option `-d` ou `--data-path`, cette option vous permets une multitude de possibilité comme utilisé le même fichier pour génerer plusieur carte ID rapide et Dynamique avec l'**IA**.<br>
 <br>
 Pour utiliser trés simple
 ```
-    python main.py -i active
+    python main.py -d chemin/*.txt
+    python main.py --data-path chemin/*.json
 ```
 
 ## **Mode Interactif**
+![](img/demeModeActive.gif)
 Le **Mode iteractif** permet aux utilisateurs d'interagits avec l'**IA** qui vérifie et traitement vos données tout en vous indiquant les potentiels erreur que vous pourriez faire. Vous êtes guidés dans ses interventions par des informations visualisées grâce l'**IA**.<br>
 
-paramètre d'utilisation du le mode interactif<br>
+paramètre d'utilisation du le **mode interactif**<br>
 + activation `-i active`<br>
 - descativation `-i descative` etat par defaut
 
-## **Avenir**
-+ passage des parametres à l'<b style="text-transform:uppercase;">(ia)</b> pour éviter de les renter en dûr dans le programme 
 
-    ```
-    python main.py --nom kouassi --prenom marie --pays --...
-    ```
+## **Mode data parse**
+Le mode <b style="text-transform:uppercase;" > data parse </b> vous permet d'envoyer le contenu d'un fichier a l'**IA** qui utilisera les données du fichier pour confectionner une nouvelle **carte ID**. l'**IA** détecte automatiquement les données mal fournir et vous le signal avec des messages précis
 
-- enregistrer la sortie dans un fichier **texte**
-
-    ```
-    python main.py -s || --save path
-    ```
-
-+ fournir du **json** ou du **texte** pour évider de rentrer les parametres `--nom ...`
+paramètre d'utilisation du le **mode data parse**<br>
++ json `-d data.json`<br>
+- texte `--data-path /data/carte.txt` etat par defaut
++ format accéptable du **json** ou du **texte** pour évider de rentrer les parametres `--nom ...`
 
     ```
     python main.py -d || --data path
@@ -63,7 +59,7 @@ paramètre d'utilisation du le mode interactif<br>
         "dtn":"17-07-1954",
         "sex":"F",
         "taille":1.65,
-        "masse":65,
+        "poid":65,
         "pays":"USA",
         "job":"femme d'Etat"
     }
@@ -75,9 +71,23 @@ paramètre d'utilisation du le mode interactif<br>
     dtn:12-07-100    
     sex:M
     taille:1.8        
-    masse:93
+    poid:93
     pays:France
     job:empreur
+    ```
+    >`remarque` : l'ordre de disposition des key:value ne sont pas important
+
+## **Avenir**
++ passage des parametres à l'<b style="text-transform:uppercase;">(ia)</b> pour éviter de les renter en dûr dans le programme 
+
+    ```
+    python main.py --nom kouassi --prenom marie --pays --...
+    ```
+
+- enregistrer la sortie dans un fichier **texte**
+
+    ```
+    python main.py -s || --save path
     ```
 
 - introduire et gérer un fichier de configuration **json** 
@@ -100,4 +110,4 @@ git log --oneline
 # **Ce Depot**
 > **__Toute amélioration sera la  `BIENVENUE`__** <br>
 > **email `kouyatosten@gmail.com`** <br>
-> **Statut :  `En Cours`**
+> **Statut  `En Cours`**

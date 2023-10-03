@@ -75,11 +75,11 @@ if op_i == 'active':
                     continue
 
             elif i == 7:# pays
-                if not value.isdigit():
+                if len(value)>3:
                     data[i] = value
                     verifi = False
                 else :
-                    print('le pays ne doit pas contenir de chiffre')
+                    print('le pays doit avoir un nombre de caractére > 3')
                     continue
             
             else :#date de naissance
@@ -193,16 +193,6 @@ if op_data:
             print(f'{"-"*5}{i}:{j}')
     exit()
 
-
-
-'''nom:jul
-prenom:céssar       
-sex:M
-dtn:12-07-100    
-taille:1.8        
-masse:93
-pays:France
-job:empreur'''
 # # programme principale
 
 logo = lambda word = 'Py-Carte-ID' : f'\n{word:-^60}'
