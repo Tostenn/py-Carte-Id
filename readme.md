@@ -13,7 +13,7 @@ Ce README est en constante évolution, alors jetez-y un coup d'œil plus complet
 ### **Exemle de Carte d'Identité génerer par l'IA**
    ![](img/ID.png)
 
-### Teste l'**IA**
+### Test l'**IA**
 ```
 git clone https://github.com/Tostenn/py-Carte-Id.git
 cd py-Carte-Id
@@ -77,7 +77,7 @@ paramètre d'utilisation du le **mode data parse**<br>
     ```
     >`remarque` : l'ordre de disposition des key:value ne sont pas important
 
-## **Avenir**
+## **À venir**
 + passage des parametres à l'<b style="text-transform:uppercase;">(ia)</b> pour éviter de les renter en dûr dans le programme 
 
     ```
@@ -95,6 +95,8 @@ paramètre d'utilisation du le **mode data parse**<br>
     ```
     python main.py config ...
     ```
+- Ajouter un affichage sous forme d'image
+
 
 ## **Commencer a travail sur le depôt**
 ```
