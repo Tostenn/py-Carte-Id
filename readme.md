@@ -1,5 +1,5 @@
 # **Carte d'Identité**
-Qu'est-ce qu'une **Carte d'Identité** ? Vous le savez sûrement, une **carte d'identité** est un **Objet** qui regroupe plusieurs de nos informations personnelles telles que **nom**, **prénom**, **date de naissance** et j'en passe, mais le plus important sur une **Carte d'Identité** c'est la **photo** grâce à notre **Intelligence Artificielle (IA)** capable de vous générer **un avartar Authentique** en fonction de vos informations personnelles .Cependant la caractéristique      **sexe**   est très influente lors de   la conception de votre carte d'itentité.
+Qu'est-ce qu'une **Carte d'Identité** ? Vous le savez sûrement, une **carte d'identité** est un **Objet** qui regroupe plusieurs de nos informations personnelles telles que **nom**, **prénom**, **date de naissance** et j'en passe, mais le plus important sur une **Carte d'Identité** c'est la **photo** grâce à notre **Intelligence Artificielle (IA)** qui vous génère **un avartar Authentique** en tenant compte de vos informations personnelles cependant le sexe influence beaucoup à la conception.
 <hr>
 
 ### <b style="text-transform:capitalize;"> bon  à savoir</b>
@@ -21,6 +21,7 @@ python main.py
 
 ```
 ## Nouveauté
+Data parse
 ![](img/demaModeDataParse.gif)
 Désormais possible de passer des données contenu dans fichier `Texte` ou `Json` grâce à l'option `-d` ou `--data-path`, cette option vous permets une multitude de possibilité comme utilisé le même fichier pour génerer plusieur carte ID rapide et Dynamique avec l'**IA**.<br>
 <br>
@@ -29,6 +30,10 @@ Pour utiliser trés simple
     python main.py -d chemin/*.txt
     python main.py --data-path chemin/*.json
 ```
+ Image representation<br>
+ Les images sont chargés a partir du template suivant <br>
+<img src="img/template.png"></img>
+    
 
 ## **Mode Interactif**
 ![](img/demeModeActive.gif)
@@ -95,7 +100,6 @@ paramètre d'utilisation du le **mode data parse**<br>
     ```
     python main.py config ...
     ```
-- Ajouter un affichage sous forme d'image
 
 
 ## **Commencer a travail sur le depôt**

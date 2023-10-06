@@ -1,4 +1,3 @@
-
 from module.fonction import temps
 
 class User:
@@ -28,7 +27,7 @@ class User:
         assert nom.isalpha() and len(nom) >=3, 'nom is not isalpha and >= 3'
         assert prenom.isalpha() and len(prenom) >=3, 'prenom is not isalpha and >= 3'
         assert age >= 0, 'age >= 0'
-        assert sexe.lower() in ['h','f'], 'sex in [ H , F ]'
+        assert sexe.lower() in ['h','f'], 'sex must be  H or F ]'
         assert taile >= 0, 'taile >= 0 and at unity Metre'
         assert masse >= 0, 'masse >= 0 and at unity Kilogramme'
         assert job.isalpha() and len(job) >= 3, 'job not isalpha and >= 3'

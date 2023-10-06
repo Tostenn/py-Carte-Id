@@ -1,7 +1,6 @@
-
 from module.carte import CarteId,User
 from module.user import User
-from module.fonction import effter,dataValidation,__veri_chemin__,__conten_fic__,recujson
+from module.fonction import effter, dataValidation, __veri_chemin__, __conten_fic__, recujson, afficher_carte
 
 # insertion du mode interactif -i || --interactif
 from optparse import OptionParser
@@ -210,6 +209,7 @@ user = User(
 
 carte = CarteId(user)
 print(carte)
+afficher_carte(carte)
 # print(f'{logo()}\n{carte.__repr__()}')
 print(op.usage)
 

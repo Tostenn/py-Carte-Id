@@ -1,24 +1,31 @@
-
-
-from os import system,path
+from os import system,path,mkdir
 from time import sleep,localtime
 from sys import platform
 from json import load
 
+# modules pour la creation et l'affichage d'image
+from PIL import Image, ImageDraw, ImageFont
+import numpy as np
+import cv2
 
-def rlt(x = 0.3) -> True:'''renlanti le programme'''; sleep(x)
 
-def effter():'''efface le terminal''';system("cls") if platform == "win32" else system("clear")
+def rlt(x = 0.3) -> True:
+    # ralanti le programme
+    sleep(x)
+
+def effter():
+    # efface le terminal
+    system("cls") if platform == "win32" else system("clear")
 
 def temps():
-    '''renvoir la date et heure'''
+    # renvoir la date et heure
     tp = localtime()
     an = [tp.tm_mday,tp.tm_mon,tp.tm_year]
     heur = [tp.tm_hour,tp.tm_min,tp.tm_sec]
     return an,heur
 
 def dataValidation(data:dict):
-    """validation des donnée"""
+    # validation des donnée
     data_error = {}
     for key, value in data.items():
 
@@ -71,11 +78,40 @@ def __conten_fic__(chemin,l = 'r') -> str:
         else : return 
 
 def recujson(ch = 'data.json'):
-    '''recupere les donners d'un fichier json'''
+    # recupere les donners d'un fichier json
     try:
         if __veri_chemin__(ch) == 'ficher':
             with open(ch,'r',encoding='utf-8') as file:
                 data = load(file)
             return data
     except: return {}
+
+def afficher_carte(carte):
+    attrs = {
+        (337, 60):carte.user.job,
+        (250, 85): (carte.fmt_pays().upper() + carte.fmt_nb()),
+        (240, 110): carte.user.nom.upper(),
+        (264, 135): carte.user.prenom.capitalize(),
+        (260, 160): carte.user.date,
+        #(257, 162): carte.user.lieu,
+        (244, 185): carte.user.taille + " m",
+        (377, 185): str(carte.user.masse) + " kg"
+    }
+
+    image = Image.open("img/template.png")
+
+    drawer = ImageDraw.Draw(image)
+    font = ImageFont.truetype("arial.ttf", 15)
+
+    for attr in attrs:
+        drawer.text(attr, attrs[attr], font=font, fill=(0, 0, 0))
+
+    if not path.exists("cards"): mkdir("cards")
+    image.save("cards/"+carte.fmt_pays().upper() + carte.fmt_nb() + ".png")
+
+    img = np.array(image)
+
+    cv2.imshow(carte.fmt_pays().upper() + carte.fmt_nb(), img)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
     
