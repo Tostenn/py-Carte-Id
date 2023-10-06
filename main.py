@@ -1,17 +1,34 @@
-from module.carte import CarteId,User
+
+from module.carte import CarteId
 from module.user import User
-from module.fonction import effter, dataValidation, __veri_chemin__, __conten_fic__, recujson, afficher_carte
+from module.fonction import (
+    effter,
+    dataValidation,
+    __veri_chemin__,
+    __conten_fic__,
+    recujson,
+    logo,
+    save
+)
 
 # insertion du mode interactif -i || --interactif
 from optparse import OptionParser
 
 usage = '''Usage de l'IA
     python main.py
+    
         -i || --interactif [active || desactive] passer en mode interactif
-        ex : python main.py -i active
+            ex : python main.py -i active
+
+        -d || --data-path [chemin] | passer en mode data parse
+            ex : python main.py -d data.json
+
+        -s || --save [txt || img || ..] sauvegarder la sortir en un format donnée
+            vous pouvez le combiné avec tout les paramétre de géneration de Carte ID
+            ex : python main.py -d data.json -s fichier.png
 '''
 
-op = OptionParser(usage,version='1.0.1.1')
+op = OptionParser(usage,version='2.0.1')
 
 # -i || --interactive
 op.add_option(
@@ -22,10 +39,17 @@ op.add_option(
 # -d || --data-path
 op.add_option(
     '-d','--data-path',dest='op_data',type='string',
-    help='passer en mode interactif'
+    help='passer en mode data parse'
+)
+
+# -s || --save
+op.add_option(
+    '-s','--save',dest='op_save',type='string',
+    help='sauvegarde la sortir'
 )
 
 argument = op.parse_args()[0]
+op_save = argument.op_save
 effter()
 
 
@@ -102,7 +126,7 @@ if op_i == 'active':
                                     continue
 
                             if j == 2:
-                                if len(str(value)) == 4 :d[2] = value;v= False
+                                if 0 < len(str(value)) < 5 :d[2] = value;v= False
                                 else :
                                     print('anne [0000-9999]')
                                     continue
@@ -120,13 +144,14 @@ if op_i == 'active':
         pays=data[7],
         daten=data[8]
     )
-    userCatre = CarteId(user)
+    userCatre = CarteId(user).__str__()
+    save(op_save,userCatre)
     effter()
     print('annimation ici aussi')
     print(userCatre)
     exit()
 
-# le second parametre est prioritaire 
+# le second parametre est prioritaire
 op_data = argument.op_data
 if op_data:
 
@@ -137,7 +162,7 @@ if op_data:
     # chemin existe 
     # vérification de l'extension du fichier
 
-    if not op_data.endswith(('.txt','json')):
+    if not op_data.endswith(('.txt','.json')):
         print(f'le format du fichier [ {op_data} ] fournir n\'est pas pris en compte \nformat accepter [json] et [txt] ')
         exit()
 
@@ -183,9 +208,10 @@ if op_data:
             pays=datas['pays'],
             daten=datas['dtn']
         )
-        userCatre = CarteId(user)
+        userCatre = CarteId(user).__str__()
         print('annimation ici aussi')
         print(userCatre)
+        save(op_save,userCatre)
     else:
         print('erreur survenu\nListe')
         for i,j in error.items():
@@ -194,7 +220,6 @@ if op_data:
 
 # # programme principale
 
-logo = lambda word = 'Py-Carte-ID' : f'\n{word:-^60}'
 
 user = User(
     prenom='kouya',nom='tosten',age=20,
@@ -209,7 +234,5 @@ user = User(
 
 carte = CarteId(user)
 print(carte)
-afficher_carte(carte)
 # print(f'{logo()}\n{carte.__repr__()}')
 print(op.usage)
-

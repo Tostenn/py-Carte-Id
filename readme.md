@@ -1,5 +1,5 @@
 # **Carte d'Identité**
-Qu'est-ce qu'une **Carte d'Identité** ? Vous le savez sûrement, une **carte d'identité** est un **Objet** qui regroupe plusieurs de nos informations personnelles telles que **nom**, **prénom**, **date de naissance** et j'en passe, mais le plus important sur une **Carte d'Identité** c'est la **photo** grâce à notre **Intelligence Artificielle (IA)** qui vous génère **un avartar Authentique** en tenant compte de vos informations personnelles cependant le sexe influence beaucoup à la conception.
+Qu'est-ce qu'une **Carte d'Identité** ? Vous le savez sûrement, une **carte d'identité** est un **Objet** qui regroupe plusieurs de nos informations personnelles telles que **nom**, **prénom**, **date de naissance** et j'en passe, mais le plus important sur une **Carte d'Identité** c'est la **photo** grâce à notre **Intelligence Artificielle (IA)** capable de vous générer **un avartar Authentique** en tenant compte de vos informations personnelles. Cependant le caractère  **sexe** influence beaucoup à la conception .
 <hr>
 
 ### <b style="text-transform:capitalize;"> bon  à savoir</b>
@@ -21,33 +21,32 @@ python main.py
 
 ```
 ## Nouveauté
-Data parse
-![](img/demaModeDataParse.gif)
-Désormais possible de passer des données contenu dans fichier `Texte` ou `Json` grâce à l'option `-d` ou `--data-path`, cette option vous permets une multitude de possibilité comme utilisé le même fichier pour génerer plusieur carte ID rapide et Dynamique avec l'**IA**.<br>
+Désormais possible d'enregister la Carte ID au foramt **Png** ou **Texte**,
+cette option peut être associer au différent mode pour une meilleur expérience visuel avec l'**IA**.<br>
 <br>
 Pour utiliser trés simple
 ```
-    python main.py -d chemin/*.txt
-    python main.py --data-path chemin/*.json
+    python main.py -d chemin/*.txt --save myCarte.png
+    python main.py --data-path chemin/*.json -s myCarte
 ```
- Image representation<br>
- Les images sont chargés a partir du template suivant <br>
+
+>remaque : L'enregistrement au format image sera formater à partir de ce template <br>
 <img src="img/template.png"></img>
     
-
 ## **Mode Interactif**
 ![](img/demeModeActive.gif)
-Le **Mode iteractif** permet aux utilisateurs d'interagits avec l'**IA** qui vérifie et traitement vos données tout en vous indiquant les potentiels erreur que vous pourriez faire. Vous êtes guidés dans ses interventions par des informations visualisées grâce l'**IA**.<br>
+Le **Mode iteractif** permet aux utilisateurs d'interagir  avec l'**IA** qui vérifie le traitement de vos données tout en vous indiquant les erreurs potentielles suceptibles d'être commise . Vous êtes guidés dans ses interventions par des informations visualisées grâce l'**IA**.<br>
 
 paramètre d'utilisation du le **mode interactif**<br>
 + activation `-i active`<br>
-- descativation `-i descative` etat par defaut
+- descativation `-i descative` état par defaut
 
 
 ## **Mode data parse**
+![](img/demaModeDataParse.gif)
 Le mode <b style="text-transform:uppercase;" > data parse </b> vous permet d'envoyer le contenu d'un fichier a l'**IA** qui utilisera les données du fichier pour confectionner une nouvelle **carte ID**. l'**IA** détecte automatiquement les données mal fournir et vous le signal avec des messages précis
 
-paramètre d'utilisation du le **mode data parse**<br>
+paramètre d'utilisation du  **mode data parse**<br>
 + json `-d data.json`<br>
 - texte `--data-path /data/carte.txt` etat par defaut
 + format accéptable du **json** ou du **texte** pour évider de rentrer les parametres `--nom ...`
@@ -82,6 +81,16 @@ paramètre d'utilisation du le **mode data parse**<br>
     ```
     >`remarque` : l'ordre de disposition des key:value ne sont pas important
 
+## Sauvegarde d'une Carte ID
+aprés avoir génerer votre **Carte ID**, sa serait cool de pouvoir l'enregistrer, se rêve est possible avec l'option `-s` ou `--save` qui permet d'enregistrer votre travail au format souhaiter. vous pouvez la combiner avec tout les mode de géneration de carte sans aucun probleme
+
+paramètre d'utilisation pour bien enregistrer votre travail<br>
+`-s` nomfichier.[`png` || `txt`] fourni un de fichier suivi du foramt dans lequel vous souhaitez sauvegarder 
+> vous pouvez indiquer un de fichier sans extension pour enregistrer au format texte
+```
+    python main.py -i active -s Carte-ID.png
+```
+
 ## **À venir**
 + passage des parametres à l'<b style="text-transform:uppercase;">(ia)</b> pour éviter de les renter en dûr dans le programme 
 
@@ -100,18 +109,19 @@ paramètre d'utilisation du le **mode data parse**<br>
     ```
     python main.py config ...
     ```
+- Ajouter un affichage sous forme d'image
 
 
 ## **Commencer a travail sur le depôt**
 ```
 git clone https://github.com/Tostenn/py-Carte-Id.git
-echo voir l'histoireique des commits
+echo voir l'historique des commits
 cd py-Carte-Id
 git log --oneline
 ```
 
 ## **Avis aux Developpeurs**
-> tout **Developpeur** désireux de participer ou emettre des suggestions peut nous rejoindre sur telegram [**Carte d'Identité en python**](https://t.me/+n9v9xfVaR38xNmM0) quelque soit votre niveau de developpeur vous serez le ou la bienvenue.
+>tout **Developpeur** désireux de participer ou emettre des suggestions peut nous rejoindre sur telegram [**Carte d'Identité en python**](https://t.me/+n9v9xfVaR38xNmM0) quelque soit votre niveau de developpeur vous serez le ou la bienvenue.
 
 # **Ce Depot**
 > **__Toute amélioration sera la  `BIENVENUE`__** <br>
