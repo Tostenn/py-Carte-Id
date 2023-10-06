@@ -21,6 +21,7 @@ python main.py
 
 ```
 ## Nouveauté
+Data parse
 ![](img/demaModeDataParse.gif)
 Désormais possible de passer des données contenu dans fichier `Texte` ou `Json` grâce à l'option `-d` ou `--data-path`, cette option vous permets une multitude de possibilité comme utilisé le même fichier pour génerer plusieur carte ID rapide et Dynamique avec l'**IA**.<br>
 <br>
@@ -29,6 +30,10 @@ Pour utiliser trés simple
     python main.py -d chemin/*.txt
     python main.py --data-path chemin/*.json
 ```
+ Image representation<br>
+ Les images sont chargés a partir du template suivant <br>
+<img src="img/template.png"></img>
+    
 
 ## **Mode Interactif**
 ![](img/demeModeActive.gif)
@@ -95,7 +100,6 @@ paramètre d'utilisation du le **mode data parse**<br>
     ```
     python main.py config ...
     ```
-- Ajouter un affichage sous forme d'image
 
 
 ## **Commencer a travail sur le depôt**
