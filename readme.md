@@ -1,5 +1,5 @@
 # **Carte d'Identité**
-Qu'est-ce qu'une **Carte d'Identité** ? Vous le savez sûrement, une **carte d'identité** est un **Objet** qui regroupe plusieurs de nos informations personnelles telles que **nom**, **prénom**, **date de naissance** et j'en passe, mais le plus important sur une **Carte d'Identité** c'est la **photo** grâce à notre **Intelligence Artificielle (IA)** qui vous génère **un avartar Authentique** en tenant compte de vos informations personnelles cependant le sexe influence beaucoup à la conception.
+Qu'est-ce qu'une **Carte d'Identité** ? Vous le savez sûrement, une **carte d'identité** est un **Objet** qui regroupe plusieurs de nos informations personnelles telles que **nom**, **prénom**, **date de naissance** et j'en passe, mais le plus important sur une **Carte d'Identité** c'est la **photo** grâce à notre **Intelligence Artificielle (IA)** capable de vous générer **un avartar Authentique** en fonction de vos informations personnelles .Cependant la caractéristique      **sexe**   est très influente lors de   la conception de votre carte d'itentité.
 <hr>
 
 ### <b style="text-transform:capitalize;"> bon  à savoir</b>
