@@ -127,6 +127,7 @@ def saveTxt(namefile:str,data:str):
     print(f'{logo()}\nsauvegarde réussir | fichier {path.join(getcwd(),namefile)} {logo()}')
 
 def savePng(op_s:str,carte):
+
     attrs = {
         (337, 60):carte.user.job,
         (250, 85): (carte.fmt_pays().upper() + carte.fmt_nb()),
@@ -155,5 +156,3 @@ def savePng(op_s:str,carte):
     cv2.destroyAllWindows()
 
     print(f'{logo()}\nsauvegarde réussir | fichier {path.join(getcwd(),op_s)} {logo()}')
-
-  

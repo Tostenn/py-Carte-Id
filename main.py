@@ -17,14 +17,14 @@ from optparse import OptionParser
 usage = '''Usage de l'IA
     python main.py
     
-        -i || --interactif [active || desactive] passer en mode interactif
-            ex : python main.py -i active
+        -i || --interactif [console || interface] passer en mode interactif
+            ex : python main.py -i console
 
         -d || --data-path [chemin] | passer en mode data parse
             ex : python main.py -d data.json
 
         -s || --save [txt || img || ..] sauvegarder la sortir en un format donnée
-            vous pouvez le combiné avec tout les paramétre de géneration de Carte ID
+            vous pouvez le combiné avec tout les4 paramétre de géneration de Carte ID
             ex : python main.py -d data.json -s fichier.png
 '''
 
@@ -56,7 +56,7 @@ effter()
 # gestion du mode interactif -i || --interatif
 # le parametre est prioritaire sur les autre et les annule tous
 op_i = argument.op_i
-if op_i == 'active':
+if op_i == 'console':
     print('intregrer une annimation ici | mode interactif')
     data = [
         'nom','prenom','age','sex','taille','poids',
@@ -221,6 +221,7 @@ if op_data:
         op_save = save(op_save,userCatre,CarteId(user))
         if op_save == 'txt' or not op_save:
             print(userCatre)
+
     else:
         print('erreur survenu\nListe')
         for i,j in error.items():

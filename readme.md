@@ -7,9 +7,13 @@ Ce README est en constante évolution, alors jetez-y un coup d'œil plus complet
 
 ## **Prérequis**
 + `Pyhon`
-- `module`<br>
-    > tout les **`modules`** utilisés actuellement sont natifs à `python`
 
+    > version __>= 3__
+- `module`
+
+    >`opencv-python` version __4.8.1.78__<br>
+    `Pillow` version __10.0.0__
+    
 ### **Exemle de Carte d'Identité génerer par l'IA**
    ![](img/ID.png)
 
@@ -17,14 +21,18 @@ Ce README est en constante évolution, alors jetez-y un coup d'œil plus complet
 ```
 git clone https://github.com/Tostenn/py-Carte-Id.git
 cd py-Carte-Id
+pip install -r requirement.txt
 python main.py
 
 ```
+
 ## Nouveauté
+![](img/demoSavetexte.gif)
+
 Désormais possible d'enregister la Carte ID au foramt **Png** ou **Texte**,
 cette option peut être associer au différent mode pour une meilleur expérience visuel avec l'**IA**.<br>
 <br>
-Pour utiliser trés simple
+Pour utiliser, trés simple
 ```
     python main.py -d chemin/*.txt --save myCarte.png
     python main.py --data-path chemin/*.json -s myCarte
@@ -35,15 +43,17 @@ Pour utiliser trés simple
     
 ## **Mode Interactif**
 ![](img/demeModeActive.gif)
+
 Le **Mode iteractif** permet aux utilisateurs d'interagir  avec l'**IA** qui vérifie le traitement de vos données tout en vous indiquant les erreurs potentielles suceptibles d'être commise . Vous êtes guidés dans ses interventions par des informations visualisées grâce l'**IA**.<br>
 
 paramètre d'utilisation du le **mode interactif**<br>
-+ activation `-i active`<br>
-- descativation `-i descative` état par defaut
-
++ interation avec la console `-i console`
+- interation via une interface graphique `-i interface` (pas encore disponible)
++ descativation `-i descative` état par defaut
 
 ## **Mode data parse**
 ![](img/demaModeDataParse.gif)
+
 Le mode <b style="text-transform:uppercase;" > data parse </b> vous permet d'envoyer le contenu d'un fichier a l'**IA** qui utilisera les données du fichier pour confectionner une nouvelle **carte ID**. l'**IA** détecte automatiquement les données mal fournir et vous le signal avec des messages précis
 
 paramètre d'utilisation du  **mode data parse**<br>
@@ -98,11 +108,11 @@ paramètre d'utilisation pour bien enregistrer votre travail<br>
     python main.py --nom kouassi --prenom marie --pays --...
     ```
 
-- enregistrer la sortie dans un fichier **texte**
++ mode Interactif avec une interface graphique
+    ```
+    python main.py -i interface
+    ```
 
-    ```
-    python main.py -s || --save path
-    ```
 
 - introduire et gérer un fichier de configuration **json** 
 
@@ -110,13 +120,13 @@ paramètre d'utilisation pour bien enregistrer votre travail<br>
     python main.py config ...
     ```
 - Ajouter un affichage sous forme d'image
-
-
+!
 ## **Commencer a travail sur le depôt**
 ```
 git clone https://github.com/Tostenn/py-Carte-Id.git
 echo voir l'historique des commits
 cd py-Carte-Id
+pip install -r requirement.txt
 git log --oneline
 ```
 
