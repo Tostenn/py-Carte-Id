@@ -145,10 +145,15 @@ if op_i == 'active':
         daten=data[8]
     )
     userCatre = CarteId(user).__str__()
-    save(op_save,userCatre)
+    op_save = save(op_save,userCatre,CarteId(user))
+   
     effter()
     print('annimation ici aussi')
-    print(userCatre)
+
+    # affiche la carte dans la console -s txt || no -s
+    op_save = save(op_save,userCatre,CarteId(user))
+    if op_save == 'txt' or not op_save:
+        print(userCatre)
     exit()
 
 # le second parametre est prioritaire
@@ -209,9 +214,13 @@ if op_data:
             daten=datas['dtn']
         )
         userCatre = CarteId(user).__str__()
+        effter()
         print('annimation ici aussi')
-        print(userCatre)
-        save(op_save,userCatre)
+
+        # affiche la carte dans la console -s txt || no -s
+        op_save = save(op_save,userCatre,CarteId(user))
+        if op_save == 'txt' or not op_save:
+            print(userCatre)
     else:
         print('erreur survenu\nListe')
         for i,j in error.items():

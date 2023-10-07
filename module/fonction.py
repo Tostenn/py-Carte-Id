@@ -94,13 +94,13 @@ def recujson(ch = 'data.json'):
             return data
     except: return {}
     
-def save(op_s:str,data:str):
+def save(op_s:str,data:str,carteID):
     """determine le format d'enregistre de la sortir"""
 
     if not op_s:return
     
     action = True
-    if not op_s.endswith(('.txt',)):
+    if not op_s.endswith(('.txt','.png')):
         action = False
 
     # accepte les fichiers sans extensions
@@ -113,13 +113,20 @@ def save(op_s:str,data:str):
 
     if op_s.endswith('.txt') or not '.' in op_s:
         saveTxt(op_s,data)
+        return 'txt'
+
+    else :
+        savePng(op_s,carteID)
+        return 'png'
 
 def saveTxt(namefile:str,data:str):
 
+    data = data.replace("É","E")
+    data = data.replace("N°","N ",1)
     __ecri_fic__(namefile,data)
     print(f'{logo()}\nsauvegarde réussir | fichier {path.join(getcwd(),namefile)} {logo()}')
 
-def afficher_carte(carte):
+def savePng(op_s:str,carte):
     attrs = {
         (337, 60):carte.user.job,
         (250, 85): (carte.fmt_pays().upper() + carte.fmt_nb()),
@@ -139,12 +146,14 @@ def afficher_carte(carte):
     for attr in attrs:
         drawer.text(attr, attrs[attr], font=font, fill=(0, 0, 0))
 
-    if not path.exists("cards"): mkdir("cards")
-    image.save("cards/"+carte.fmt_pays().upper() + carte.fmt_nb() + ".png")
+    image.save(op_s)
 
     img = np.array(image)
 
     cv2.imshow(carte.fmt_pays().upper() + carte.fmt_nb(), img)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
+
+    print(f'{logo()}\nsauvegarde réussir | fichier {path.join(getcwd(),op_s)} {logo()}')
+
   
