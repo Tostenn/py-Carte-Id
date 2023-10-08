@@ -145,7 +145,7 @@ def savePng(op_s:str,carte):
     image = Image.open("img/template.png")
 
     drawer = ImageDraw.Draw(image)
-    font = ImageFont.truetype("arial.ttf", 15)
+    font = ImageFont.truetype(r"font\Roboto-Bold.ttf", 15)
 
     for attr in attrs:
         drawer.text(attr, attrs[attr], font=font, fill=(0, 0, 0))
