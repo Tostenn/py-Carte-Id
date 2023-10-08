@@ -11,6 +11,9 @@ from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 import cv2
 
+from tkinter import Tk
+
+
 def rlt(x = 0.3) -> None:'''renlanti le programme'''; sleep(x)
 
 def effter() -> None:'''efface le terminal''';system("cls") if platform == "win32" else system("clear")
@@ -132,7 +135,7 @@ def savePng(op_s:str,carte):
         (337, 60):carte.user.job,
         (250, 85): (carte.fmt_pays().upper() + carte.fmt_nb()),
         (240, 110): carte.user.nom.upper(),
-        (264, 135): carte.user.prenom.capitalize(),
+        (264, 135): carte.user.prenom.upper(),
         (260, 160): carte.user.date,
         #(257, 162): carte.user.lieu,
         (244, 185): carte.user.taille + " m",
@@ -151,7 +154,22 @@ def savePng(op_s:str,carte):
 
     img = np.array(image)
 
-    cv2.imshow(carte.fmt_pays().upper() + carte.fmt_nb(), img)
+    # centrer l'affichage de la carte
+    # recuperer les dimension de la fenetre
+    sizef = Tk()
+    sizef = sizef.winfo_screenwidth(),sizef.winfo_screenheight()
+    sizef = (sizef[0]//2,sizef[1]//2)
+
+    # recuperer les dimension de l'img
+    sizeimg = img.shape
+    sizeimg = (sizeimg[0]//2,sizeimg[1]//2)
+
+    fenetre = f'py-Carte-ID-{carte.user.nom}'
+    cv2.imshow(fenetre, img)
+    cv2.moveWindow(
+        fenetre,sizef[0]-sizeimg[1],sizef[1]-sizeimg[0]
+    )
+
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 

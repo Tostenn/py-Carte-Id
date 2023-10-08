@@ -27,7 +27,11 @@ python main.py
 ```
 
 ## Nouveauté
+### Sauvegarde avec un fichier Texte
 ![](img/demoSavetexte.gif)
+
+### Sauvegarde avec un fichier imge png
+![](img/demoSavePng.gif)
 
 Désormais possible d'enregister la Carte ID au foramt **Png** ou **Texte**,
 cette option peut être associer au différent mode pour une meilleur expérience visuel avec l'**IA**.<br>
