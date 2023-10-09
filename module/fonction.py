@@ -3,16 +3,24 @@ from os import system,path,getcwd
 from time import sleep,localtime
 from sys import platform
 from json import load
-from repertoire import __ecri_fic__
-logo = lambda word = 'Py-Carte-ID' : f'\n{word:-^60}'
 
 # modules pour la creation et l'affichage d'image
 from PIL import Image, ImageDraw, ImageFont
-import numpy as np
-import cv2
+
+from cv2 import (
+    imread,
+    resize,
+    moveWindow,
+    destroyAllWindows,
+    waitKey,
+    imshow,
+    ROTATE_180,
+    imwrite
+)
 
 from tkinter import Tk
 
+logo = lambda word = 'Py-Carte-ID' : f'\n{word:-^60}'
 
 def rlt(x = 0.3) -> None:'''renlanti le programme'''; sleep(x)
 
@@ -97,7 +105,7 @@ def recujson(ch = 'data.json'):
             return data
     except: return {}
     
-def save(op_s:str,data:str,carteID):
+def save(op_s:str,data:str,carteID,profile:str,theme:str):
     """determine le format d'enregistre de la sortir"""
 
     if not op_s:return
@@ -119,7 +127,22 @@ def save(op_s:str,data:str,carteID):
         return 'txt'
 
     else :
-        savePng(op_s,carteID)
+        if theme:
+            th = ['dark','light','degrader']
+            if not theme in th:
+                print(f'{logo()}\nerreur | le theme indiquer n\'existe pas | [{", ".join(th)}] {logo()}')
+                return 
+            
+        if profile:
+            if not  __veri_chemin__(profile) == 'ficher':
+                print(f'{logo()}\nerreur | le fichier indiquer [ {profile} ] n\'existe pas {logo()}')
+                return
+            
+            elif not profile.endswith(('.png','.jpeg','.jpg','.webp')):
+                print(f'{logo()}\nerreur | le fichier indiquer [ {profile} ] n\'est pas une image {logo()}')
+                return
+
+        savePng(op_s,carteID,theme,profile)
         return 'png'
 
 def saveTxt(namefile:str,data:str):
@@ -129,30 +152,66 @@ def saveTxt(namefile:str,data:str):
     __ecri_fic__(namefile,data)
     print(f'{logo()}\nsauvegarde réussir | fichier {path.join(getcwd(),namefile)} {logo()}')
 
-def savePng(op_s:str,carte):
+# from carte import CarteId
+def savePng(op_s:str,carte,theme,profile):
 
+    # position des different champs
     attrs = {
-        (337, 60):carte.user.job,
-        (250, 85): (carte.fmt_pays().upper() + carte.fmt_nb()),
-        (240, 110): carte.user.nom.upper(),
-        (264, 135): carte.user.prenom.upper(),
-        (260, 160): carte.user.date,
-        #(257, 162): carte.user.lieu,
-        (244, 185): carte.user.taille + " m",
-        (377, 185): str(carte.user.masse) + " kg"
+        (275, 102): carte.fmt_pays().upper()+carte.fmt_nb(),
+        (250, 140): carte.user.nom.upper(),
+        (250, 180): carte.user.prenom.upper(),
+        (270, 230): carte.user.date,
+        (405, 230): carte.user.sex,
+        (255, 280): f'{carte.user.taille} m'.upper(),
+        (315, 280): f'{carte.user.masse} kg'.upper(),
+        (13, 290):carte.user.job.upper(),
     }
 
-    image = Image.open("img/template.png")
+    paths = ['template-dark-id.png','template-ligth-id.png','template-degrader-id.png']
 
+    # choisir le theme de la carte
+    
+    color_text = 0
+    if theme:
+        paths = [i for i in paths if theme in i][0]
+        if theme == 'dark': color_text = 255
+    else : paths = paths[1]
+    
+    image = Image.open('template-id/'+paths)
     drawer = ImageDraw.Draw(image)
     font = ImageFont.truetype(r"font\Roboto-Bold.ttf", 15)
 
+
     for attr in attrs:
-        drawer.text(attr, attrs[attr], font=font, fill=(0, 0, 0))
+        drawer.text(attr, attrs[attr], font=font, fill=(color_text, color_text, color_text))
+    font = ImageFont.truetype(r"font\Roboto-Bold.ttf", 25)
+    drawer.text((240, 17), carte.user.pays.upper(), font=font, fill=(color_text, color_text, color_text))
+
 
     image.save(op_s)
 
-    img = np.array(image)
+    
+    image = imread(op_s)
+
+    # positionner la photo de profil
+    x = 15
+    y = 112
+    if profile:
+        size = (200,170)
+        photo = imread(profile)
+        photo = resize(photo,size)
+        print(photo.size)
+        image[y:size[1]+y,x:size[0]+x] =photo[0:size[1],0:size[0]]
+
+
+    # posionner le drapeau
+    # size = (50,33)
+    # photo = resize(photo,size)
+    # photo = rotate(photo,ROTATE_180)
+    # x = 434
+    # y = 19
+    # image[y:size[1]+y,x:size[0]+x] =photo[0:size[1],0:size[0]]
+
 
     # centrer l'affichage de la carte
     # recuperer les dimension de la fenetre
@@ -161,16 +220,17 @@ def savePng(op_s:str,carte):
     sizef = (sizef[0]//2,sizef[1]//2)
 
     # recuperer les dimension de l'img
-    sizeimg = img.shape
+    sizeimg = image.shape
     sizeimg = (sizeimg[0]//2,sizeimg[1]//2)
 
     fenetre = f'py-Carte-ID-{carte.user.nom}'
-    cv2.imshow(fenetre, img)
-    cv2.moveWindow(
+    imwrite(op_s,image)
+    imshow(fenetre, image)
+    moveWindow(
         fenetre,sizef[0]-sizeimg[1],sizef[1]-sizeimg[0]
     )
 
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    waitKey(0)
+    destroyAllWindows()
 
     print(f'{logo()}\nsauvegarde réussir | fichier {path.join(getcwd(),op_s)} {logo()}')

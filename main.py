@@ -48,8 +48,22 @@ op.add_option(
     help='sauvegarde la sortir'
 )
 
+# -pp || --photo-profil
+op.add_option(
+    '--profil',dest='op_pp',type='string',
+    help='photo de profile de la carte'
+)
+
+# -pp || -theme
+op.add_option(
+    '--theme',dest='op_th',type='string',
+    help='pour choisir un theme'
+)
+
 argument = op.parse_args()[0]
 op_save = argument.op_save
+op_pp = argument.op_pp
+op_th = argument.op_th
 effter()
 
 
@@ -145,13 +159,12 @@ if op_i == 'console':
         daten=data[8]
     )
     userCatre = CarteId(user).__str__()
-    op_save = save(op_save,userCatre,CarteId(user))
    
     effter()
     print('annimation ici aussi')
 
     # affiche la carte dans la console -s txt || no -s
-    op_save = save(op_save,userCatre,CarteId(user))
+    op_save = save(op_save,userCatre,CarteId(user),op_pp,op_th)
     if op_save == 'txt' or not op_save:
         print(userCatre)
     exit()
@@ -218,7 +231,7 @@ if op_data:
         print('annimation ici aussi')
 
         # affiche la carte dans la console -s txt || no -s
-        op_save = save(op_save,userCatre,CarteId(user))
+        op_save = save(op_save,userCatre,CarteId(user),op_pp,op_th)
         if op_save == 'txt' or not op_save:
             print(userCatre)
 
