@@ -27,6 +27,8 @@ python main.py
 ```
 
 ## Nouveauté
+![](img/demosavepnfprofile.gif)
+
 Désormais possible d'enregister la Carte ID avec différent théme spécifique générer automatiquement et de plus un petit cadeau on peut modifier la photo de profile par defaut pour mettre nottre belle photo à nous.
 cette option peut être associer au différent mode pour une meilleur expérience visuel avec l'**IA**.<br>
 <br>
