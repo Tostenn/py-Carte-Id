@@ -167,7 +167,7 @@ def savePng(op_s:str,carte,theme,profile):
         (13, 290):carte.user.job.upper(),
     }
 
-    paths = ['template-dark-id.png','template-ligth-id.png','template-degrader-id.png']
+    paths = ['template-dark-id.png','template-light-id.png','template-degrader-id.png']
 
     # choisir le theme de la carte
     
@@ -185,17 +185,19 @@ def savePng(op_s:str,carte,theme,profile):
     for attr in attrs:
         drawer.text(attr, attrs[attr], font=font, fill=(color_text, color_text, color_text))
     font = ImageFont.truetype(r"font\Roboto-Bold.ttf", 25)
+    if theme == 'degrader':
+        color_text = 255
     drawer.text((240, 17), carte.user.pays.upper(), font=font, fill=(color_text, color_text, color_text))
 
 
     image.save(op_s)
 
-    
+
     image = imread(op_s)
 
     # positionner la photo de profil
     x = 15
-    y = 112
+    y = 115
     if profile:
         size = (200,170)
         photo = imread(profile)

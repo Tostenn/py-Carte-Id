@@ -68,7 +68,7 @@ effter()
 
 
 # gestion du mode interactif -i || --interatif
-# le parametre est prioritaire sur les autre et les annule tous
+# le parametre est prioritaire sur les autre 
 op_i = argument.op_i
 if op_i == 'console':
     print('intregrer une annimation ici | mode interactif')

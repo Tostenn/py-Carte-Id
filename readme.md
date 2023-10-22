@@ -1,4 +1,4 @@
-# **Carte d'Identité**
+# <b style="text-transform:uppercase;letter-spacing:5px;color:#00af91">carte d'Identité</b>
 Qu'est-ce qu'une **Carte d'Identité** ? Vous le savez sûrement, une **carte d'identité** est un **Objet** qui regroupe plusieurs de nos informations personnelles telles que **nom**, **prénom**, **date de naissance** et j'en passe, mais le plus important sur une **Carte d'Identité** c'est la **photo** grâce à notre **Intelligence Artificielle (IA)** capable de vous générer **un avartar Authentique** en tenant compte de vos informations personnelles. Cependant le caractère  **sexe** influence beaucoup à la conception .
 <hr>
 
@@ -27,23 +27,18 @@ python main.py
 ```
 
 ## Nouveauté
-### Sauvegarde avec un fichier Texte
-![](img/demoSavetexte.gif)
-
-### Sauvegarde avec un fichier imge png
-![](img/demoSavePng.gif)
-
-Désormais possible d'enregister la Carte ID au foramt **Png** ou **Texte**,
+Désormais possible d'enregister la Carte ID avec différent théme spécifique générer automatiquement et de plus un petit cadeau on peut modifier la photo de profile par defaut pour mettre nottre belle photo à nous.
 cette option peut être associer au différent mode pour une meilleur expérience visuel avec l'**IA**.<br>
 <br>
 Pour utiliser, trés simple
 ```
-    python main.py -d chemin/*.txt --save myCarte.png
-    python main.py --data-path chemin/*.json -s myCarte
+python main.py -d chemin/*.txt --s myCarte.png --theme dark --profile profil.png
+python main.py --data-path chemin/*.json -save myCarte
+
 ```
 
 >remaque : L'enregistrement au format image sera formater à partir de ce template <br>
-<img src="img/template.png"></img>
+<img src="template-id/template-light-id.png"></img>
     
 ## **Mode Interactif**
 ![](img/demeModeActive.gif)
@@ -98,13 +93,33 @@ paramètre d'utilisation du  **mode data parse**<br>
 ## Sauvegarde d'une Carte ID
 aprés avoir génerer votre **Carte ID**, sa serait cool de pouvoir l'enregistrer, se rêve est possible avec l'option `-s` ou `--save` qui permet d'enregistrer votre travail au format souhaiter. vous pouvez la combiner avec tout les mode de géneration de carte sans aucun probleme
 
+### Sauvegarde avec un fichier Texte
+![](img/demoSavetexte.gif)
 paramètre d'utilisation pour bien enregistrer votre travail<br>
 `-s` nomfichier.[`png` || `txt`] fourni un de fichier suivi du foramt dans lequel vous souhaitez sauvegarder 
 > vous pouvez indiquer un de fichier sans extension pour enregistrer au format texte
 ```
-    python main.py -i active -s Carte-ID.png
+    python main.py -i console -s Carte-ID.png
 ```
-
+### Theme de suvegarder 
+avec les recent **mise à jours** on peut désormais utiliser jusqu'a trois **théme** différenrs qui sont les **théme**
++ <b style="text-transform:uppercase;letter-spacing:3px">dark</b>
+    ```
+    python main.py -d data.txt -s Carte-ID.png --theme ligth
+    ```
+- <b style="text-transform:uppercase;letter-spacing:3px">ligth</b>
+    ```
+    python main.py -d data.txt -s Carte-ID.png --theme dark
+    ```
++ <b style="text-transform:uppercase;letter-spacing:3px">degrader</b>
+    ```
+    python main.py -d data.txt -s Carte-ID.png --theme degrader
+    ```
+### mise a jour de la photo de profile
+pour modifier la photo de profile de la **Carte Id** génerer par l'**IA** avec la commande `--profil` suivi du nom de l'image
+```
+python main.py -d chemin/*.txt --s myCarte.png --theme dark --profile profil.png
+```
 ## **À venir**
 + passage des parametres à l'<b style="text-transform:uppercase;">(ia)</b> pour éviter de les renter en dûr dans le programme 
 
@@ -117,14 +132,12 @@ paramètre d'utilisation pour bien enregistrer votre travail<br>
     python main.py -i interface
     ```
 
-
 - introduire et gérer un fichier de configuration **json** 
 
     ```
     python main.py config ...
     ```
-- Ajouter un affichage sous forme d'image
-!
++ ajout automatiquement le drapeau du pays indique avec la sauvegarde au format image
 ## **Commencer a travail sur le depôt**
 ```
 git clone https://github.com/Tostenn/py-Carte-Id.git
