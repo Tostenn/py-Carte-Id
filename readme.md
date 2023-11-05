@@ -18,12 +18,43 @@ Ce README est en constante évolution, alors jetez-y un coup d'œil plus complet
    ![](img/ID.png)
 
 ### Test l'**IA**
-```
+```bash
 git clone https://github.com/Tostenn/py-Carte-Id.git
 cd py-Carte-Id
 pip install -r requirement.txt
 python main.py
 
+```
+
+##  <b style="text-transform:capitalize;">structure</b>
+```bash
+└── py-Carte-Id
+    ├── .gitignore
+    ├── module
+    │   ├── carte.py
+    │   ├── user.py
+    │   ├── fonction.py
+    │   └── __pycache__
+    ├── requirement.txt
+    ├── font
+    │   └── Roboto-Bold.ttf
+    ├── data.txt
+    ├── template-id
+    │   ├── template-light-id.png
+    │   ├── template-degrader-id.png      
+    │   └── template-dark-id.png
+    ├── main.py
+    ├── py-carte-Id.png
+    ├── img
+    │   ├── ID.png
+    │   ├── demeModeActive.gif
+    │   ├── demaModeDataParse.gif
+    │   ├── demoSavetexte.gif
+    │   ├── template.png
+    │   ├── demoSavePng.gif
+    │   └── demosavepnfprofile.gif  
+    ├── LICENSE
+    └── readme.md
 ```
 
 ## Nouveauté
@@ -33,7 +64,7 @@ Désormais possible d'enregister la Carte ID avec différent théme spécifique 
 cette option peut être associer au différent mode pour une meilleur expérience visuel avec l'**IA**.<br>
 <br>
 Pour utiliser, trés simple
-```
+```bash
 python main.py -d chemin/*.txt --s myCarte.png --theme dark --profile profil.png
 python main.py --data-path chemin/*.json -save myCarte
 
@@ -67,7 +98,7 @@ paramètre d'utilisation du  **mode data parse**<br>
     ```
     + format **json**
     
-    ```
+    ```json
     {
         "nom":"angela",
         "prenom":"merkel",
@@ -80,7 +111,7 @@ paramètre d'utilisation du  **mode data parse**<br>
     }
     ```
     - format **texte**
-    ```
+    ```txt
     nom:jul
     prenom:céssar       
     dtn:12-07-100    
@@ -100,7 +131,7 @@ aprés avoir génerer votre **Carte ID**, sa serait cool de pouvoir l'enregistre
 paramètre d'utilisation pour bien enregistrer votre travail<br>
 `-s` nomfichier.[`png` || `txt`] fourni un de fichier suivi du foramt dans lequel vous souhaitez sauvegarder 
 > vous pouvez indiquer un de fichier sans extension pour enregistrer au format texte
-```
+```bash
     python main.py -i console -s Carte-ID.png
 ```
 ### Theme de suvegarder 
@@ -119,7 +150,7 @@ avec les recent **mise à jours** on peut désormais utiliser jusqu'a trois **th
     ```
 ### mise a jour de la photo de profile
 pour modifier la photo de profile de la **Carte Id** génerer par l'**IA** avec la commande `--profil` suivi du nom de l'image
-```
+```bash
 python main.py -d chemin/*.txt --s myCarte.png --theme dark --profile profil.png
 ```
 ## **À venir**
@@ -141,9 +172,9 @@ python main.py -d chemin/*.txt --s myCarte.png --theme dark --profile profil.png
     ```
 + ajout automatiquement le drapeau du pays indique avec la sauvegarde au format image
 ## **Commencer a travail sur le depôt**
-```
+```bash
 git clone https://github.com/Tostenn/py-Carte-Id.git
-echo voir l'historique des commits
+echo voir l historique des commits
 cd py-Carte-Id
 pip install -r requirement.txt
 git log --oneline
