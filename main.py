@@ -1,4 +1,3 @@
-
 from module.carte import CarteId
 from module.user import User
 from module.fonction import (
@@ -8,6 +7,8 @@ from module.fonction import (
     __conten_fic__,
     recujson,
     logo,
+    word_logo,
+    barre,
     save
 )
 
@@ -29,6 +30,12 @@ usage = '''Usage de l'IA
 '''
 
 op = OptionParser(usage,version='2.0.1')
+
+# afficha du logo du projet
+from pyfiglet import Figlet,figlet_format
+effter()
+py_carte_id = Figlet(direction='center').renderText(word_logo)
+print(py_carte_id)
 
 # -i || --interactive
 op.add_option(
@@ -64,7 +71,6 @@ argument = op.parse_args()[0]
 op_save = argument.op_save
 op_pp = argument.op_pp
 op_th = argument.op_th
-effter()
 
 
 # gestion du mode interactif -i || --interatif
@@ -161,7 +167,8 @@ if op_i == 'console':
     userCatre = CarteId(user).__str__()
    
     effter()
-    print('annimation ici aussi')
+    print(py_carte_id) # logo en grand
+    barre() #annimation 
 
     # affiche la carte dans la console -s txt || no -s
     op_save = save(op_save,userCatre,CarteId(user),op_pp,op_th)
@@ -213,7 +220,9 @@ if op_data:
     # validation des données
     datas,error = dataValidation(datas)
 
-    effter()
+    # effter()
+    # print(py_carte_id)
+    barre()
     if not error:
         user = User(
             nom=datas['nom'],
@@ -227,8 +236,8 @@ if op_data:
             daten=datas['dtn']
         )
         userCatre = CarteId(user).__str__()
-        effter()
-        print('annimation ici aussi')
+        # effter()
+        # print('annimation ici aussi')
 
         # affiche la carte dans la console -s txt || no -s
         op_save = save(op_save,userCatre,CarteId(user),op_pp,op_th)
@@ -241,21 +250,15 @@ if op_data:
             print(f'{"-"*5}{i}:{j}')
     exit()
 
+
 # # programme principale
-
-
 user = User(
     prenom='kouya',nom='tosten',age=20,
     sexe='H',taile=1.8,masse=72,job='Developpeur',
     pays='Côte d\'ivoire',
     daten=[3,10,196]
 )
-# print(f'''{user}{logo()}
-# repr : {user.__repr__()}
-# {logo()}
-# ''')
 
 carte = CarteId(user)
 print(carte)
-# print(f'{logo()}\n{carte.__repr__()}')
 print(op.usage)
