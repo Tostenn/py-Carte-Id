@@ -144,7 +144,7 @@ def save(op_s:str,data:str,carteID,profile:str,theme:str):
                 print(f'{logo()}\nerreur | le fichier indiquer [ {profile} ] n\'est pas une image {logo()}')
                 return
 
-        # savePng(op_s,carteID,theme,profile)
+        savePng(op_s,carteID,theme,profile)
         return 'png'
 
 def saveTxt(namefile:str,data:str):
@@ -155,89 +155,88 @@ def saveTxt(namefile:str,data:str):
     print(f'{logo()}\nsauvegarde réussir | fichier {path.join(getcwd(),namefile)} {logo()}')
 
 # from carte import CarteId
-# def savePng(op_s:str,carte,theme,profile):
+def savePng(op_s:str,carte,theme,profile):
 
-#     # position des different champs
-#     attrs = {
-#         (275, 102): carte.fmt_pays().upper()+carte.fmt_nb(),
-#         (250, 140): carte.user.nom.upper(),
-#         (250, 180): carte.user.prenom.upper(),
-#         (270, 230): carte.user.date,
-#         (405, 230): carte.user.sex,
-#         (255, 280): f'{carte.user.taille} m'.upper(),
-#         (315, 280): f'{carte.user.masse} kg'.upper(),
-#         (13, 290):carte.user.job.upper(),
-#     }
+    # position des different champs
+    attrs = {
+        (275, 102): carte.fmt_pays().upper()+carte.fmt_nb(),
+        (250, 140): carte.user.nom.upper(),
+        (250, 180): carte.user.prenom.upper(),
+        (270, 230): carte.user.date,
+        (405, 230): carte.user.sex,
+        (255, 280): f'{carte.user.taille} m'.upper(),
+        (315, 280): f'{carte.user.masse} kg'.upper(),
+        (13, 290):carte.user.job.upper(),
+    }
 
-#     paths = ['template-dark-id.png','template-light-id.png','template-degrader-id.png']
+    paths = ['template-dark-id.png','template-light-id.png','template-degrader-id.png']
 
-#     # choisir le theme de la carte
+    # choisir le theme de la carte
     
-#     color_text = 0
-#     if theme:
-#         paths = [i for i in paths if theme in i][0]
-#         if theme == 'dark': color_text = 255
-#     else : paths = paths[1]
+    color_text = 0
+    if theme:
+        paths = [i for i in paths if theme in i][0]
+        if theme == 'dark': color_text = 255
+    else : paths = paths[1]
     
-#     image = Image.open('template-id/'+paths)
-#     drawer = ImageDraw.Draw(image)
-#     font = ImageFont.truetype(r"font\Roboto-Bold.ttf", 15)
+    image = Image.open('template-id/'+paths)
+    drawer = ImageDraw.Draw(image)
+    font = ImageFont.truetype(r"font\Roboto-Bold.ttf", 15)
 
 
-#     for attr in attrs:
-#         drawer.text(attr, attrs[attr], font=font, fill=(color_text, color_text, color_text))
-#     font = ImageFont.truetype(r"font\Roboto-Bold.ttf", 25)
-#     if theme == 'degrader':
-#         color_text = 255
-#     drawer.text((240, 17), carte.user.pays.upper(), font=font, fill=(color_text, color_text, color_text))
+    for attr in attrs:
+        drawer.text(attr, attrs[attr], font=font, fill=(color_text, color_text, color_text))
+    font = ImageFont.truetype(r"font\Roboto-Bold.ttf", 25)
+    if theme == 'degrader':
+        color_text = 255
+    drawer.text((240, 17), carte.user.pays.upper(), font=font, fill=(color_text, color_text, color_text))
 
 
-#     image.save(op_s)
+    image.save(op_s)
 
 
-#     image = imread(op_s)
+    image = imread(op_s)
 
-#     # positionner la photo de profil
-#     x = 15
-#     y = 115
-#     if profile:
-#         size = (200,170)
-#         photo = imread(profile)
-#         photo = resize(photo,size)
-#         print(photo.size)
-#         image[y:size[1]+y,x:size[0]+x] =photo[0:size[1],0:size[0]]
-
-
-#     # posionner le drapeau
-#     # size = (50,33)
-#     # photo = resize(photo,size)
-#     # photo = rotate(photo,ROTATE_180)
-#     # x = 434
-#     # y = 19
-#     # image[y:size[1]+y,x:size[0]+x] =photo[0:size[1],0:size[0]]
+    # positionner la photo de profil
+    x = 15
+    y = 115
+    if profile:
+        size = (200,170)
+        photo = imread(profile)
+        photo = resize(photo,size)
+        image[y:size[1]+y,x:size[0]+x] =photo[0:size[1],0:size[0]]
 
 
-#     # centrer l'affichage de la carte
-#     # recuperer les dimension de la fenetre
-#     sizef = Tk()
-#     sizef = sizef.winfo_screenwidth(),sizef.winfo_screenheight()
-#     sizef = (sizef[0]//2,sizef[1]//2)
+    # posionner le drapeau
+    # size = (50,33)
+    # photo = resize(photo,size)
+    # photo = rotate(photo,ROTATE_180)
+    # x = 434
+    # y = 19
+    # image[y:size[1]+y,x:size[0]+x] =photo[0:size[1],0:size[0]]
 
-#     # recuperer les dimension de l'img
-#     sizeimg = image.shape
-#     sizeimg = (sizeimg[0]//2,sizeimg[1]//2)
 
-#     fenetre = f'py-Carte-ID-{carte.user.nom}'
-#     imwrite(op_s,image)
-#     imshow(fenetre, image)
-#     moveWindow(
-#         fenetre,sizef[0]-sizeimg[1],sizef[1]-sizeimg[0]
-#     )
+    # centrer l'affichage de la carte
+    # recuperer les dimension de la fenetre
+    sizef = Tk()
+    sizef = sizef.winfo_screenwidth(),sizef.winfo_screenheight()
+    sizef = (sizef[0]//2,sizef[1]//2)
 
-#     waitKey(0)
-#     destroyAllWindows()
+    # recuperer les dimension de l'img
+    sizeimg = image.shape
+    sizeimg = (sizeimg[0]//2,sizeimg[1]//2)
 
-#     print(f'{logo()}\nsauvegarde réussir | fichier {path.join(getcwd(),op_s)} {logo()}')
+    fenetre = f'py-Carte-ID-{carte.user.nom}'
+    imwrite(op_s,image)
+    imshow(fenetre, image)
+    moveWindow(
+        fenetre,sizef[0]-sizeimg[1],sizef[1]-sizeimg[0]
+    )
+
+    waitKey(0)
+    destroyAllWindows()
+
+    print(f'{logo()}\nsauvegarde réussir | fichier {path.join(getcwd(),op_s)} {logo()}')
 
 def barre(total:int=150):
     with alive_bar(total,title = word_logo,receipt=True) as bar:

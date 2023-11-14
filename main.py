@@ -32,7 +32,7 @@ usage = '''Usage de l'IA
 op = OptionParser(usage,version='2.0.1')
 
 # afficha du logo du projet
-from pyfiglet import Figlet,figlet_format
+from pyfiglet import Figlet
 effter()
 py_carte_id = Figlet(direction='center').renderText(word_logo)
 print(py_carte_id)
