@@ -24,13 +24,15 @@ class User:
                 
         daten = '/'.join(daten)
 
-        assert nom.isalpha() and len(nom) >=3, 'nom is not isalpha and >= 3'
-        assert prenom.isalpha() and len(prenom) >=3, 'prenom is not isalpha and >= 3'
+        def _alpha_clean(s): return s.replace(' ', '').replace('-', '').replace("'", '').replace('é','e').replace('è','e').replace('ê','e').replace('à','a').replace('â','a').replace('ô','o').replace('î','i').replace('û','u').replace('ç','c')
+
+        assert _alpha_clean(nom).isalpha() and len(nom) >= 3, 'nom is not isalpha and >= 3'
+        assert _alpha_clean(prenom).isalpha() and len(prenom) >= 3, 'prenom is not isalpha and >= 3'
         assert age >= 0, 'age >= 0'
         assert sexe.lower() in ['h','f'], 'sex must be  H or F ]'
         assert taile >= 0, 'taile >= 0 and at unity Metre'
         assert masse >= 0, 'masse >= 0 and at unity Kilogramme'
-        assert job.isalpha() and len(job) >= 3, 'job not isalpha and >= 3'
+        assert _alpha_clean(job).isalpha() and len(job) >= 3, 'job not isalpha and >= 3'
         assert not (pays.isdigit()) and len(pays) >= 3, 'pays not isalpha and >= 3'
         assert daten.isascii() and len(daten) == 10, 'daten == 10 format 01-01-1001 | dd-mm-yyyy'
 
