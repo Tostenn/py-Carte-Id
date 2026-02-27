@@ -21,16 +21,78 @@ effter()
 py_carte_id = Figlet(direction='center').renderText(word_logo)
 print(Fore.CYAN + py_carte_id + Style.RESET_ALL)
 
-usage = '''%(prog)s
+usage = '''%(prog)s [OPTIONS]
 
-    -i | --interactive [console | interface]  mode interactif
-        ex : %(prog)s -i console
+DESCRIPTION
+    Py-Carte-ID est un générateur de carte d'identité en ligne de commande.
+    Sans argument, affiche une carte de démonstration.
 
-    -d | --data-path [chemin]  mode data parse
-        ex : %(prog)s -d data.json
+OPTIONS
+    -i, --interactive MODE
+        Passer en mode interactif pour saisir les données manuellement.
+        MODE : console (seul mode disponible actuellement)
 
-    -s | --save [fichier.txt | fichier.png]  sauvegarder la sortie
-        ex : %(prog)s -d data.json -s carte.png
+        Exemples :
+            %(prog)s -i console
+            %(prog)s -i console -s carte.png
+            %(prog)s -i console --theme dark --profil photo.jpg -s carte.png
+
+    -d, --data-path FICHIER
+        Charger les données depuis un fichier JSON ou TXT.
+        FICHIER : chemin vers un fichier .json ou .txt
+
+        Clés requises dans le fichier :
+            nom, prenom, sex, taille, dtn, poids, pays, job
+
+        Exemples :
+            %(prog)s -d data.json
+            %(prog)s -d utilisateur.txt
+            %(prog)s -d data.json -s carte.png --theme light
+
+    -s, --save FICHIER
+        Sauvegarder la carte générée dans un fichier.
+        FICHIER : chemin vers un fichier .txt ou .png
+
+        Exemples :
+            %(prog)s -d data.json -s carte.txt
+            %(prog)s -d data.json -s carte.png
+            %(prog)s -i console -s ma_carte.png
+
+    --profil IMAGE
+        Définir la photo de profil pour la carte image (PNG).
+        IMAGE : chemin vers un fichier image (png, jpg, webp)
+
+        Exemples :
+            %(prog)s -d data.json -s carte.png --profil photo.jpg
+            %(prog)s -i console -s carte.png --profil avatar.png
+
+    --theme THEME
+        Choisir le thème visuel pour la carte image (PNG).
+        THEME : dark | light | degrader
+
+        Exemples :
+            %(prog)s -d data.json -s carte.png --theme dark
+            %(prog)s -d data.json -s carte.png --theme light
+            %(prog)s -d data.json -s carte.png --theme degrader
+
+EXEMPLES COMPLETS
+    # Mode démo (sans arguments)
+    %(prog)s
+
+    # Mode interactif simple
+    %(prog)s -i console
+
+    # Mode interactif avec sauvegarde PNG, thème et photo
+    %(prog)s -i console -s carte.png --theme dark --profil photo.jpg
+
+    # Charger depuis JSON et sauvegarder en PNG
+    %(prog)s -d data.json -s carte.png --theme light --profil profil.png
+
+    # Charger depuis TXT et afficher en console
+    %(prog)s -d utilisateur.txt
+
+    # Charger depuis JSON et sauvegarder en TXT
+    %(prog)s -d data.json -s carte.txt
 '''
 
 op = ArgumentParser(description="Py-Carte-ID — Générateur de carte d'identité", usage=usage)
@@ -38,19 +100,22 @@ op = ArgumentParser(description="Py-Carte-ID — Générateur de carte d'identit
 # -i || --interactive
 op.add_argument(
     '-i','--interactive', dest='op_i', type=str, metavar='MODE',
-    help='passer en mode interactif (console)'
+    nargs='?', const='console', default=None,
+    help='passer en mode interactif (défaut: console)'
 )
 
 # -d || --data-path
 op.add_argument(
     '-d','--data-path', dest='op_data', type=str, metavar='FICHIER',
-    help='passer en mode data parse (json ou txt)'
+    nargs='?', const='data.json', default=None,
+    help='passer en mode data parse (défaut: data.json)'
 )
 
 # -s || --save
 op.add_argument(
     '-s','--save', dest='op_save', type=str, metavar='FICHIER',
-    help='sauvegarde la sortie (txt ou png)'
+    nargs='?', const='py-carte-Id.png', default=None,
+    help='sauvegarde la sortie (défaut: py-carte-Id.png)'
 )
 
 # --profil
