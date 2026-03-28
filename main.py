@@ -12,147 +12,222 @@ from module.fonction import (
     save
 )
 
-# insertion du mode interactif -i || --interactif
-from optparse import OptionParser
-
-usage = '''Usage de l'IA
-    python main.py
-    
-        -i || --interactif [console || interface] passer en mode interactif
-            ex : python main.py -i console
-
-        -d || --data-path [chemin] | passer en mode data parse
-            ex : python main.py -d data.json
-
-        -s || --save [txt || img || ..] sauvegarder la sortir en un format donnée
-            vous pouvez le combiné avec tout les4 paramétre de géneration de Carte ID
-            ex : python main.py -d data.json -s fichier.png
-'''
-
-op = OptionParser(usage,version='2.0.1')
-
-# afficha du logo du projet
+from argparse import ArgumentParser
 from pyfiglet import Figlet
+from colorama import Fore, Style
+
+# affichage du logo du projet
 effter()
 py_carte_id = Figlet(direction='center').renderText(word_logo)
-print(py_carte_id)
+print(Fore.CYAN + py_carte_id + Style.RESET_ALL)
+
+usage = '''%(prog)s [OPTIONS]
+
+DESCRIPTION
+    Py-Carte-ID est un générateur de carte d'identité en ligne de commande.
+    Sans argument, affiche une carte de démonstration.
+
+OPTIONS
+    -i, --interactive MODE
+        Passer en mode interactif pour saisir les données manuellement.
+        MODE : console (seul mode disponible actuellement)
+
+        Exemples :
+            %(prog)s -i console
+            %(prog)s -i console -s carte.png
+            %(prog)s -i console --theme dark --profil photo.jpg -s carte.png
+
+    -d, --data-path FICHIER
+        Charger les données depuis un fichier JSON ou TXT.
+        FICHIER : chemin vers un fichier .json ou .txt
+
+        Clés requises dans le fichier :
+            nom, prenom, sex, taille, dtn, poids, pays, job
+
+        Exemples :
+            %(prog)s -d data.json
+            %(prog)s -d utilisateur.txt
+            %(prog)s -d data.json -s carte.png --theme light
+
+    -s, --save FICHIER
+        Sauvegarder la carte générée dans un fichier.
+        FICHIER : chemin vers un fichier .txt ou .png
+
+        Exemples :
+            %(prog)s -d data.json -s carte.txt
+            %(prog)s -d data.json -s carte.png
+            %(prog)s -i console -s ma_carte.png
+
+    --profil IMAGE
+        Définir la photo de profil pour la carte image (PNG).
+        IMAGE : chemin vers un fichier image (png, jpg, webp)
+
+        Exemples :
+            %(prog)s -d data.json -s carte.png --profil photo.jpg
+            %(prog)s -i console -s carte.png --profil avatar.png
+
+    --theme THEME
+        Choisir le thème visuel pour la carte image (PNG).
+        THEME : dark | light | degrader
+
+        Exemples :
+            %(prog)s -d data.json -s carte.png --theme dark
+            %(prog)s -d data.json -s carte.png --theme light
+            %(prog)s -d data.json -s carte.png --theme degrader
+
+EXEMPLES COMPLETS
+    # Mode démo (sans arguments)
+    %(prog)s
+
+    # Mode interactif simple
+    %(prog)s -i console
+
+    # Mode interactif avec sauvegarde PNG, thème et photo
+    %(prog)s -i console -s carte.png --theme dark --profil photo.jpg
+
+    # Charger depuis JSON et sauvegarder en PNG
+    %(prog)s -d data.json -s carte.png --theme light --profil profil.png
+
+    # Charger depuis TXT et afficher en console
+    %(prog)s -d utilisateur.txt
+
+    # Charger depuis JSON et sauvegarder en TXT
+    %(prog)s -d data.json -s carte.txt
+'''
+
+op = ArgumentParser(description="Py-Carte-ID — Générateur de carte d'identité", usage=usage)
 
 # -i || --interactive
-op.add_option(
-    '-i','--interactive',dest='op_i',type='string',
-    help='passer en mode interactif'
+op.add_argument(
+    '-i','--interactive', dest='op_i', type=str, metavar='MODE',
+    nargs='?', const='console', default=None,
+    help='passer en mode interactif (défaut: console)'
 )
 
 # -d || --data-path
-op.add_option(
-    '-d','--data-path',dest='op_data',type='string',
-    help='passer en mode data parse'
+op.add_argument(
+    '-d','--data-path', dest='op_data', type=str, metavar='FICHIER',
+    nargs='?', const='data.json', default=None,
+    help='passer en mode data parse (défaut: data.json)'
 )
 
 # -s || --save
-op.add_option(
-    '-s','--save',dest='op_save',type='string',
-    help='sauvegarde la sortir'
+op.add_argument(
+    '-s','--save', dest='op_save', type=str, metavar='FICHIER',
+    nargs='?', const='py-carte-Id.png', default=None,
+    help='sauvegarde la sortie (défaut: py-carte-Id.png)'
 )
 
-# -pp || --photo-profil
-op.add_option(
-    '--profil',dest='op_pp',type='string',
-    help='photo de profile de la carte'
+# --profil
+op.add_argument(
+    '--profil', dest='op_pp', type=str, metavar='IMAGE',
+    help='photo de profil de la carte (png, jpg, webp)'
 )
 
-# -pp || -theme
-op.add_option(
-    '--theme',dest='op_th',type='string',
-    help='pour choisir un theme'
+# --theme
+op.add_argument(
+    '--theme', dest='op_th', type=str, metavar='THEME',
+    help='thème de la carte image : dark | light | degrader'
 )
 
-argument = op.parse_args()[0]
+argument = op.parse_args()
 op_save = argument.op_save
-op_pp = argument.op_pp
-op_th = argument.op_th
+op_pp   = argument.op_pp
+op_th   = argument.op_th
 
-
-# gestion du mode interactif -i || --interatif
-# le parametre est prioritaire sur les autre 
+# ──────────────────────────────────────────────
+# MODE INTERACTIF  -i console
+# ──────────────────────────────────────────────
 op_i = argument.op_i
 if op_i == 'console':
-    print('intregrer une annimation ici | mode interactif')
-    data = [
-        'nom','prenom','age','sex','taille','poids',
+    print(Fore.YELLOW + 'Mode interactif — suivez les instructions' + Style.RESET_ALL)
+    fields = [
+        'nom','prenom','age','sexe','taille','poids',
         'profession','pays','date de naissance'
     ]
-    
+    data = list(fields)  # copie pour stocker les valeurs
+
     for i in range(len(data)):
 
         verifi = True
+        value = ''
         while verifi:
             if i != 8:
-                value = input(f'entre votre {data[i]} : ')
-            if not value:
-                print('entre une valeur ')
-                continue
+                value = input(f'{Fore.CYAN}  ▸ {data[i]}{Style.RESET_ALL} : ').strip()
+                if not value:
+                    print(f'{Fore.RED}  ✗ Veuillez entrer une valeur.{Style.RESET_ALL}')
+                    continue
 
-            if i in [0,1,6]:# value str isalpha
-                if value.isalpha():
+            if i in [0, 1]:  # nom, prenom : str alpha
+                clean = value.replace('-','').replace("'",'')
+                if clean.isalpha() and len(value) >= 3:
                     data[i] = value
                     verifi = False
                 else:
-                    print('type d\'entrer inattendu [a-z]')
-                    continue
+                    print(f'{Fore.RED}  ✗ Valeur invalide — lettres uniquement (min. 3 caractères){Style.RESET_ALL}')
 
-            elif i in [2,4,5]:# value int/float
+            elif i == 2:  # age : entier >= 0
+                try:
+                    v = int(value)
+                    if v >= 0:
+                        data[i] = v
+                        verifi = False
+                    else:
+                        print(f'{Fore.RED}  ✗ L\'âge doit être >= 0{Style.RESET_ALL}')
+                except:
+                    print(f'{Fore.RED}  ✗ Entrez un nombre entier{Style.RESET_ALL}')
+
+            elif i == 3:  # sexe
+                if value.lower() in ['h', 'f']:
+                    data[i] = value
+                    verifi = False
+                else:
+                    print(f'{Fore.RED}  ✗ Valeur attendue : h (homme) ou f (femme){Style.RESET_ALL}')
+
+            elif i in [4, 5]:  # taille, poids : float/int
                 try:
                     data[i] = float(value)
                     verifi = False
                 except:
-                    print('entrer un int || float')
-                    continue
-       
-            elif i == 3:#sex
-                if value.lower() in ['h','f']:
+                    print(f'{Fore.RED}  ✗ Entrez un nombre entier ou décimal{Style.RESET_ALL}')
+
+            elif i == 6:  # profession
+                clean = value.replace(' ','').replace('-','').replace("'",'')
+                if clean.isalpha() and len(value) >= 3:
                     data[i] = value
                     verifi = False
                 else:
-                    print('sen in [ h, f ]')
-                    continue
+                    print(f'{Fore.RED}  ✗ Valeur invalide — lettres uniquement (min. 3 caractères){Style.RESET_ALL}')
 
-            elif i == 7:# pays
-                if len(value)>3:
+            elif i == 7:  # pays
+                if len(value) >= 3:
                     data[i] = value
                     verifi = False
-                else :
-                    print('le pays doit avoir un nombre de caractére > 3')
-                    continue
-            
-            else :#date de naissance
-                d = ["jours",'mois','année']
-                for j in range(len(d)):
+                else:
+                    print(f'{Fore.RED}  ✗ Le nom du pays doit avoir au moins 3 caractères{Style.RESET_ALL}')
+
+            else:  # date de naissance
+                d_parts = ['jour', 'mois', 'année']
+                d_vals  = [0, 0, 0]
+                limits  = [(1, 31), (1, 12), (1000, 9999)]
+                ok = True
+                for j in range(3):
                     v = True
                     while v:
-                        value = input(f'entre votre {d[j]} de naissance : ')
-                        if value.isdigit():
-                            value = int(value)
-                            if j == 0:
-                                if value < 32:d[0] = value;v= False
-                                else : 
-                                    print('jours <= 31')
-                                    continue
-
-                            if j == 1:
-                                if value < 13:d[1] = value;v= False
-                                else : 
-                                    print('mois <= 12')
-                                    continue
-
-                            if j == 2:
-                                if 0 < len(str(value)) < 5 :d[2] = value;v= False
-                                else :
-                                    print('anne [0000-9999]')
-                                    continue
-                data[i] = d
+                        raw = input(f'{Fore.CYAN}    ▸ {d_parts[j]} de naissance{Style.RESET_ALL} : ').strip()
+                        if raw.isdigit():
+                            n = int(raw)
+                            lo, hi = limits[j]
+                            if lo <= n <= hi:
+                                d_vals[j] = n
+                                v = False
+                            else:
+                                print(f'{Fore.RED}    ✗ {d_parts[j]} doit être entre {lo} et {hi}{Style.RESET_ALL}')
+                        else:
+                            print(f'{Fore.RED}    ✗ Entrez un nombre entier{Style.RESET_ALL}')
+                data[i] = d_vals
                 verifi = False
-    
+
     user = User(
         nom=data[0],
         prenom=data[1],
@@ -164,70 +239,65 @@ if op_i == 'console':
         pays=data[7],
         daten=data[8]
     )
-    userCatre = CarteId(user).__str__()
-   
+    userCarte = CarteId(user).__str__()
+
     effter()
-    print(py_carte_id) # logo en grand
-    barre() #annimation 
+    print(Fore.CYAN + py_carte_id + Style.RESET_ALL)
+    barre()
 
     # affiche la carte dans la console -s txt || no -s
-    op_save = save(op_save,userCatre,CarteId(user),op_pp,op_th)
+    op_save = save(op_save, userCarte, CarteId(user), op_pp, op_th)
     if op_save == 'txt' or not op_save:
-        print(userCatre)
+        print(userCarte)
     exit()
 
-# le second parametre est prioritaire
+# ──────────────────────────────────────────────
+# MODE DATA PARSE  -d fichier
+# ──────────────────────────────────────────────
 op_data = argument.op_data
 if op_data:
 
     if not __veri_chemin__(op_data) == 'ficher':
-        print(f'le chiemin [ {op_data} ] fournir est [invalide] ')
+        print(f'{Fore.RED}✗ Le chemin [ {op_data} ] fourni est invalide.{Style.RESET_ALL}')
         exit()
 
-    # chemin existe 
-    # vérification de l'extension du fichier
-
-    if not op_data.endswith(('.txt','.json')):
-        print(f'le format du fichier [ {op_data} ] fournir n\'est pas pris en compte \nformat accepter [json] et [txt] ')
+    if not op_data.endswith(('.txt', '.json')):
+        print(f'{Fore.RED}✗ Le format du fichier [ {op_data} ] n\'est pas pris en compte.\n  Formats acceptés : json, txt{Style.RESET_ALL}')
         exit()
 
-    # key obligatoire
-    data_key = ['nom','prenom','sex','taille','dtn','poids','pays','job']
+    # clés obligatoires
+    data_key = ['nom', 'prenom', 'sex', 'taille', 'dtn', 'poids', 'pays', 'job']
 
     # fichier texte
-    if op_data.endswith(('.txt')):
-        data = __conten_fic__(op_data).split('\n')
+    if op_data.endswith('.txt'):
+        raw = __conten_fic__(op_data).split('\n')
         datas = {}
-        for i in data:
-            i = i.strip()
-            if ':' in i:
-                datas[i[:i.index(':')]] = i[i.index(':')+1:]
-        del data
+        for line in raw:
+            line = line.strip()
+            if ':' in line:
+                datas[line[:line.index(':')].strip()] = line[line.index(':')+1:].strip()
 
     # fichier json
     else:
         datas = recujson(op_data)
-        print(datas)
+
+    # vérification des clés
+    no_key = [k for k in data_key if not datas.get(k)]
+    if no_key:
+        print(f'{Fore.RED}✗ Données manquantes :{Style.RESET_ALL}')
+        for k in no_key:
+            print(f'  {Fore.YELLOW}• {k}{Style.RESET_ALL}')
         exit()
 
-    # verification des clés
-    no_key = [i for i in data_key if not datas.get(i)]
-
-    if len(no_key) > 0:
-        print(f'des données manquantes ont été détecter\nliste\n|{"-"*5}'+f'\n|{"-"*5}'.join(no_key))
-        exit()
-    
     # validation des données
-    datas,error = dataValidation(datas)
+    datas, error = dataValidation(datas)
 
-    # effter()
-    # print(py_carte_id)
     barre()
     if not error:
         user = User(
             nom=datas['nom'],
             prenom=datas['prenom'],
-            age= 10,
+            age=10,
             sexe=datas['sex'],
             taile=float(datas['taille']),
             masse=int(datas['poids']),
@@ -235,30 +305,30 @@ if op_data:
             pays=datas['pays'],
             daten=datas['dtn']
         )
-        userCatre = CarteId(user).__str__()
-        # effter()
-        # print('annimation ici aussi')
+        userCarte = CarteId(user).__str__()
 
-        # affiche la carte dans la console -s txt || no -s
-        op_save = save(op_save,userCatre,CarteId(user),op_pp,op_th)
+        op_save = save(op_save, userCarte, CarteId(user), op_pp, op_th)
         if op_save == 'txt' or not op_save:
-            print(userCatre)
+            print(userCarte)
 
     else:
-        print('erreur survenu\nListe')
-        for i,j in error.items():
-            print(f'{"-"*5}{i}:{j}')
+        print(f'{Fore.RED}✗ Erreurs de validation :{Style.RESET_ALL}')
+        for k, msg in error.items():
+            print(f'  {Fore.YELLOW}• {k}{Style.RESET_ALL} : {msg}')
     exit()
 
 
-# # programme principale
+# ──────────────────────────────────────────────
+# AFFICHAGE PAR DÉFAUT (démo)
+# ──────────────────────────────────────────────
 user = User(
-    prenom='kouya',nom='tosten',age=20,
-    sexe='H',taile=1.8,masse=72,job='Developpeur',
-    pays='Côte d\'ivoire',
-    daten=[3,10,196]
+    prenom='Kouya', nom='Tosten', age=20,
+    sexe='H', taile=1.8, masse=72, job='Developpeur',
+    pays="Côte d'Ivoire",
+    daten=[3, 10, 1996]
 )
 
 carte = CarteId(user)
 print(carte)
-print(op.usage)
+print(op.format_usage())
+

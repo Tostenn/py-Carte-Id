@@ -3,6 +3,9 @@ from os import system,path,getcwd
 from time import sleep,localtime
 from sys import platform
 from json import load
+from colorama import init as colorama_init, Fore, Style
+
+colorama_init(autoreset=True)
 
 # modules pour la creation et l'affichage d'image
 from PIL import Image, ImageDraw, ImageFont
@@ -18,11 +21,10 @@ from cv2 import (
     imwrite
 )
 
-from tkinter import Tk
 from alive_progress import alive_bar
 
 word_logo = 'Py-Carte-ID'
-logo = lambda _ = word_logo : f'\n{_:-^60}'
+logo = lambda _ = word_logo : f'\n{Fore.CYAN}{_:-^60}{Style.RESET_ALL}'
 
 def rlt(x = 0.3) -> None:'''renlanti le programme'''; sleep(x)
 
@@ -35,17 +37,26 @@ def temps():
     heur = [tp.tm_hour,tp.tm_min,tp.tm_sec]
     return an,heur
 
+def _alpha_clean(s:str) -> str:
+    """enlève les caractères non-alphabétiques courants pour la validation"""
+    return s.replace(' ', '').replace('-', '').replace("'", '').replace('é','e').replace('è','e').replace('ê','e').replace('à','a').replace('â','a').replace('ô','o').replace('î','i').replace('û','u').replace('ç','c')
+
 def dataValidation(data:dict):
-    """validation des donnée"""
+    """validation des données"""
     data_error = {}
+    d = None
     for key, value in data.items():
 
-        if key in ['nom','prenom','job']:
-            if not value.isalpha():
-                data_error[key] = 'ce champs ne peut contenir que des caractére alphabétique | [a-zA-Z]'
-        
+        if key in ['nom','prenom']:
+            if not _alpha_clean(str(value)).isalpha():
+                data_error[key] = 'ce champs ne peut contenir que des caractères alphabétiques, tirets ou apostrophes'
+
+        elif key == 'job':
+            if not _alpha_clean(str(value)).isalpha():
+                data_error[key] = 'ce champs ne peut contenir que des caractères alphabétiques, espaces ou apostrophes'
+
         elif key == 'sex':
-            if not value.lower() in ['h','f']:
+            if not str(value).lower() in ['h','f']:
                 data_error[key] = 'ce champs prends comme valeur h ou f | h:homme, f:femme'
         
         elif key in ['taille', 'poids']:
@@ -54,18 +65,19 @@ def dataValidation(data:dict):
             
         elif key == 'dtn':
             try:
-                d = value.split('/')
-                if not len(d) == 3:
-                    data_error[key] = 'ce champs prends comme valeur la date au foramt jj/dd/aaaa'
-                    
-                else:d = [int(i) for i in d]
+                parts = str(value).split('/')
+                if not len(parts) == 3:
+                    data_error[key] = 'ce champs prends comme valeur la date au format jj/mm/aaaa'
+                else:
+                    d = [int(i) for i in parts]
             except Exception:
-                data_error[key] = 'ce champs prends comme valeur la date au foramt jj/dd/aaaa'
+                data_error[key] = 'ce champs prends comme valeur la date au format jj/mm/aaaa'
 
-    data['dtn'] = d
-    if len(data_error)>0:
-        return data,data_error
-    return data,False
+    if d is not None:
+        data['dtn'] = d
+    if len(data_error) > 0:
+        return data, data_error
+    return data, False
 
 def __veri_chemin__(chemin:str):
         chemin = chemin if chemin else ''
@@ -121,7 +133,7 @@ def save(op_s:str,data:str,carteID,profile:str,theme:str):
         action = True
     
     if not action:
-        print(f'{logo()}\nle format du fichier indiquer n\'est pas pris en charge{logo()}')
+        print(f'{logo()}\n{Fore.RED}le format du fichier indiquer n\'est pas pris en charge{Style.RESET_ALL}{logo()}')
         return
 
     if op_s.endswith('.txt') or not '.' in op_s:
@@ -132,16 +144,16 @@ def save(op_s:str,data:str,carteID,profile:str,theme:str):
         if theme:
             th = ['dark','light','degrader']
             if not theme in th:
-                print(f'{logo()}\nerreur | le theme indiquer n\'existe pas | [{", ".join(th)}] {logo()}')
+                print(f'{logo()}\n{Fore.RED}erreur | le theme indiquer n\'existe pas | [{", ".join(th)}]{Style.RESET_ALL} {logo()}')
                 return 
             
         if profile:
             if not  __veri_chemin__(profile) == 'ficher':
-                print(f'{logo()}\nerreur | le fichier indiquer [ {profile} ] n\'existe pas {logo()}')
+                print(f'{logo()}\n{Fore.RED}erreur | le fichier indiquer [ {profile} ] n\'existe pas{Style.RESET_ALL} {logo()}')
                 return
             
             elif not profile.endswith(('.png','.jpeg','.jpg','.webp')):
-                print(f'{logo()}\nerreur | le fichier indiquer [ {profile} ] n\'est pas une image {logo()}')
+                print(f'{logo()}\n{Fore.RED}erreur | le fichier indiquer [ {profile} ] n\'est pas une image{Style.RESET_ALL} {logo()}')
                 return
 
         savePng(op_s,carteID,theme,profile)
@@ -152,7 +164,7 @@ def saveTxt(namefile:str,data:str):
     data = data.replace("É","E")
     data = data.replace("N°","N ",1)
     __ecri_fic__(namefile,data)
-    print(f'{logo()}\nsauvegarde réussir | fichier {path.join(getcwd(),namefile)} {logo()}')
+    print(f'{logo()}\n{Fore.GREEN}sauvegarde réussie | fichier {path.join(getcwd(),namefile)}{Style.RESET_ALL} {logo()}')
 
 # from carte import CarteId
 def savePng(op_s:str,carte,theme,profile):
@@ -179,14 +191,15 @@ def savePng(op_s:str,carte,theme,profile):
         if theme == 'dark': color_text = 255
     else : paths = paths[1]
     
-    image = Image.open('template-id/'+paths)
+    image = Image.open(path.join('template-id', paths))
     drawer = ImageDraw.Draw(image)
-    font = ImageFont.truetype(r"font\Roboto-Bold.ttf", 15)
+    font_path = path.join('font', 'Roboto-Bold.ttf')
+    font = ImageFont.truetype(font_path, 15)
 
 
     for attr in attrs:
         drawer.text(attr, attrs[attr], font=font, fill=(color_text, color_text, color_text))
-    font = ImageFont.truetype(r"font\Roboto-Bold.ttf", 25)
+    font = ImageFont.truetype(font_path, 25)
     if theme == 'degrader':
         color_text = 255
     drawer.text((240, 17), carte.user.pays.upper(), font=font, fill=(color_text, color_text, color_text))
@@ -207,17 +220,9 @@ def savePng(op_s:str,carte,theme,profile):
         image[y:size[1]+y,x:size[0]+x] =photo[0:size[1],0:size[0]]
 
 
-    # posionner le drapeau
-    # size = (50,33)
-    # photo = resize(photo,size)
-    # photo = rotate(photo,ROTATE_180)
-    # x = 434
-    # y = 19
-    # image[y:size[1]+y,x:size[0]+x] =photo[0:size[1],0:size[0]]
-
-
     # centrer l'affichage de la carte
     # recuperer les dimension de la fenetre
+    from tkinter import Tk
     sizef = Tk()
     sizef = sizef.winfo_screenwidth(),sizef.winfo_screenheight()
     sizef = (sizef[0]//2,sizef[1]//2)
@@ -236,12 +241,11 @@ def savePng(op_s:str,carte,theme,profile):
     waitKey(0)
     destroyAllWindows()
 
-    print(f'{logo()}\nsauvegarde réussir | fichier {path.join(getcwd(),op_s)} {logo()}')
+    print(f'{logo()}\n{Fore.GREEN}sauvegarde réussie | fichier {path.join(getcwd(),op_s)}{Style.RESET_ALL} {logo()}')
 
-def barre(total:int=150):
-    with alive_bar(total,title = word_logo,receipt=True) as bar:
+def barre(total:int=80):
+    with alive_bar(total, title=word_logo, receipt=True) as bar:
         for i in range(total):
             rlt(0.01)
-            bar.text=logo
+            bar.text(word_logo)
             bar()
-            
